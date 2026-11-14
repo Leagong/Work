@@ -1,0 +1,2297 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Deutsch Quest · SinoBridge</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif;
+            background: linear-gradient(145deg, #0a2a5e, #1a6bb0);
+            color: #0a2a5e;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .app {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: rgba(10, 30, 60, 0.65);
+            border-radius: 40px;
+            padding: 24px;
+            backdrop-filter: blur(6px);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+        }
+        .top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 16px;
+            margin-bottom: 20px;
+        }
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .logo {
+            background: #ffd84d;
+            width: 56px;
+            height: 56px;
+            border-radius: 18px;
+            display: grid;
+            place-items: center;
+            font-size: 30px;
+            color: #0a2a5e;
+            box-shadow: 0 8px 18px rgba(0, 0, 0, 0.3);
+        }
+        .brand h1,
+        .brand .small {
+            color: #ffffff !important;
+        }
+        .badge {
+            background: rgba(255, 255, 255, 0.12);
+            padding: 10px 22px;
+            border-radius: 40px;
+            font-weight: 600;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            font-size: 14px;
+            color: #ffffff !important;
+        }
+        .screen {
+            display: none;
+            animation: fade .25s ease;
+        }
+        .screen.active {
+            display: block;
+        }
+        @keyframes fade {
+            0% {
+                opacity: 0.3;
+                transform: translateY(8px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .panel {
+            background: #f0f6ff;
+            color: #0a2a5e;
+            border-radius: 28px;
+            padding: 24px;
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.18);
+        }
+        .panel p,
+        .panel h2,
+        .panel h3,
+        .panel div,
+        .panel span,
+        .panel .muted,
+        .panel .ok,
+        .panel .bad,
+        .panel .result,
+        .panel .small,
+        .panel .badge-gold,
+        .panel .secondary,
+        .panel button:not(.secondary),
+        .panel input,
+        .panel input::placeholder,
+        .panel .verb-feedback,
+        .panel .choice-btn,
+        .panel .card .sub,
+        .panel .task-item .muted,
+        .panel .convo-scene .speaker-label,
+        .panel .convo-scene div,
+        .panel .profile b,
+        .panel .profile p,
+        .panel .profile h2,
+        .panel .flex button,
+        .panel .dashboard h2,
+        .panel .dashboard p,
+        .panel .dashboard span,
+        .panel .dashboard .muted,
+        .panel #todayTasks div,
+        .panel #todayTasks span,
+        .panel #todayTasks p,
+        .panel #todayTasks .badge-gold,
+        .panel #lessonContent div,
+        .panel #lessonContent p,
+        .panel #lessonContent span,
+        .panel #lessonContent .card,
+        .panel #lessonContent .card .title,
+        .panel #lessonContent .card .sub,
+        .panel #lessonContent .verb-item,
+        .panel #lessonContent .verb-item .pronoun,
+        .panel #lessonContent .verb-item .form-input,
+        .panel #lessonContent .convo-scene,
+        .panel #lessonContent .convo-scene div,
+        .panel #lessonContent .convo-scene .speaker-label,
+        .panel #game .result,
+        .panel #game #question,
+        .panel #game .choice-btn,
+        .panel #spell .result,
+        .panel #spell #spellZh,
+        .panel #spell input,
+        .panel #verbGame .result,
+        .panel #verbGame #verbContent div,
+        .panel #verbGame #verbContent .verb-item,
+        .panel #verbGame #verbContent .verb-item .pronoun,
+        .panel #verbGame #verbContent .verb-item .form-input {
+            color: #0a2a5e !important;
+        }
+        .panel .muted {
+            color: #3d5f8a !important;
+        }
+        .panel .ok {
+            color: #1f7a3a !important;
+        }
+        .panel .bad {
+            color: #c62828 !important;
+        }
+        .panel .badge-gold {
+            color: #ffffff !important;
+        }
+        .panel .secondary {
+            color: #0a2a5e !important;
+        }
+        .panel button:not(.secondary) {
+            color: #0a2a5e !important;
+        }
+        .panel input::placeholder {
+            color: #7a9abb !important;
+        }
+        .panel .verb-feedback {
+            color: #3d5f8a !important;
+        }
+        .panel .choice-btn {
+            color: #0a2a5e !important;
+        }
+        .panel .card .sub {
+            color: #3d5f8a !important;
+        }
+        .panel .task-item .muted {
+            color: #3d5f8a !important;
+        }
+        .panel .convo-scene .speaker-label {
+            color: #0a2a5e !important;
+        }
+        .panel .convo-scene div {
+            color: #0a2a5e !important;
+        }
+        .panel .result.ok {
+            color: #1f7a3a !important;
+        }
+        .panel .result.bad {
+            color: #c62828 !important;
+        }
+        .panel .result {
+            color: #0a2a5e !important;
+        }
+        .panel .small {
+            color: #3d5f8a !important;
+        }
+        .panel .badge {
+            color: #0a2a5e !important;
+        }
+        .panel .xpbar {
+            background: #d0e0f5 !important;
+        }
+        .panel .profile b {
+            color: #0a2a5e !important;
+        }
+        .panel .profile p {
+            color: #0a2a5e !important;
+        }
+        .panel .profile h2 {
+            color: #0a2a5e !important;
+        }
+        .panel .flex button {
+            color: #0a2a5e !important;
+        }
+        .panel .dashboard h2 {
+            color: #0a2a5e !important;
+        }
+        .panel .dashboard p {
+            color: #0a2a5e !important;
+        }
+        .panel .dashboard span {
+            color: #0a2a5e !important;
+        }
+        .panel .dashboard .muted {
+            color: #3d5f8a !important;
+        }
+        .panel #todayTasks div {
+            color: #0a2a5e !important;
+        }
+        .panel #todayTasks span {
+            color: #0a2a5e !important;
+        }
+        .panel #todayTasks p {
+            color: #0a2a5e !important;
+        }
+        .panel #todayTasks .badge-gold {
+            color: #ffffff !important;
+        }
+        .panel #lessonContent div {
+            color: #0a2a5e !important;
+        }
+        .panel #lessonContent p {
+            color: #0a2a5e !important;
+        }
+        .panel #lessonContent span {
+            color: #0a2a5e !important;
+        }
+        .panel #lessonContent .card {
+            color: #0a2a5e !important;
+        }
+        .panel #lessonContent .card .title {
+            color: #0a2a5e !important;
+        }
+        .panel #lessonContent .card .sub {
+            color: #3d5f8a !important;
+        }
+        .panel #lessonContent .verb-item {
+            color: #0a2a5e !important;
+        }
+        .panel #lessonContent .verb-item .pronoun {
+            color: #0a2a5e !important;
+        }
+        .panel #lessonContent .verb-item .form-input {
+            color: #0a2a5e !important;
+        }
+        .panel #lessonContent .convo-scene {
+            color: #0a2a5e !important;
+        }
+        .panel #lessonContent .convo-scene div {
+            color: #0a2a5e !important;
+        }
+        .panel #lessonContent .convo-scene .speaker-label {
+            color: #0a2a5e !important;
+        }
+        .panel #game .result {
+            color: #0a2a5e !important;
+        }
+        .panel #game #question {
+            color: #0a2a5e !important;
+        }
+        .panel #game .choice-btn {
+            color: #0a2a5e !important;
+        }
+        .panel #spell .result {
+            color: #0a2a5e !important;
+        }
+        .panel #spell #spellZh {
+            color: #0a2a5e !important;
+        }
+        .panel #spell input {
+            color: #0a2a5e !important;
+        }
+        .panel #verbGame .result {
+            color: #0a2a5e !important;
+        }
+        .panel #verbGame #verbContent div {
+            color: #0a2a5e !important;
+        }
+        .panel #verbGame #verbContent .verb-item {
+            color: #0a2a5e !important;
+        }
+        .panel #verbGame #verbContent .verb-item .pronoun {
+            color: #0a2a5e !important;
+        }
+        .panel #verbGame #verbContent .verb-item .form-input {
+            color: #0a2a5e !important;
+        }
+        .brand h1,
+        .brand .small,
+        .top .badge {
+            color: #ffffff !important;
+        }
+        .top .badge {
+            color: #ffffff !important;
+        }
+        button {
+            border: 0;
+            border-radius: 16px;
+            padding: 12px 24px;
+            font-weight: 800;
+            font-size: 15px;
+            background: #ffd84d;
+            color: #0a2a5e;
+            cursor: pointer;
+            transition: .15s;
+            font-family: inherit;
+        }
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+        }
+        button:disabled {
+            opacity: 0.5;
+            pointer-events: none;
+            transform: none;
+        }
+        .secondary {
+            background: #ffffff;
+            border: 2px solid #b8d4f0;
+            color: #0a2a5e;
+        }
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 16px;
+        }
+        .card {
+            background: #ffffff;
+            border-radius: 20px;
+            padding: 16px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+            border: 3px solid transparent;
+            transition: .15s;
+            cursor: pointer;
+            text-align: center;
+            color: #0a2a5e;
+        }
+        .card:hover {
+            border-color: #ffd84d;
+            transform: translateY(-4px);
+        }
+        .card .emoji {
+            font-size: 48px;
+        }
+        .card .title {
+            font-weight: 900;
+            color: #0a2a5e;
+            margin-top: 6px;
+        }
+        .card .sub {
+            color: #3d5f8a;
+            font-size: 13px;
+        }
+        .dashboard {
+            display: grid;
+            grid-template-columns: 280px 1fr;
+            gap: 22px;
+        }
+        @media (max-width:760px) {
+            .dashboard {
+                grid-template-columns: 1fr;
+            }
+        }
+        .profile {
+            text-align: center;
+        }
+        .avatar {
+            font-size: 72px;
+        }
+        .xpbar {
+            height: 18px;
+            background: #d0e0f5;
+            border-radius: 40px;
+            overflow: hidden;
+            margin: 12px 0;
+        }
+        .xpfill {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, #ffd84d, #ff9f1c);
+            transition: width .3s;
+        }
+        .verb-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+        @media (max-width:500px) {
+            .verb-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        .verb-item {
+            background: #ffffff;
+            padding: 12px;
+            border-radius: 16px;
+            border: 2px solid #c8daf0;
+            text-align: center;
+            color: #0a2a5e;
+        }
+        .verb-item .pronoun {
+            font-weight: 700;
+            color: #0a2a5e;
+        }
+        .verb-item .form-input {
+            width: 100px;
+            padding: 6px 10px;
+            border-radius: 10px;
+            border: 2px solid #b8d4f0;
+            font-size: 18px;
+            text-align: center;
+            margin-top: 4px;
+            background: #ffffff;
+            color: #0a2a5e;
+        }
+        .verb-item .form-input.correct {
+            border-color: #26a65b;
+            background: #e0f5e3;
+        }
+        .verb-item .form-input.wrong {
+            border-color: #ef5350;
+            background: #ffe8e8;
+        }
+        .choice-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 14px;
+        }
+        .choice-btn {
+            background: #ffffff;
+            border: 3px solid #c8daf0;
+            border-radius: 18px;
+            padding: 18px 8px;
+            font-size: 48px;
+            cursor: pointer;
+            transition: .12s;
+            color: #0a2a5e;
+        }
+        .choice-btn:hover {
+            border-color: #ffd84d;
+            transform: scale(1.02);
+        }
+        .choice-btn.selected-correct {
+            border-color: #26a65b;
+            background: #e0f5e3;
+        }
+        .choice-btn.selected-wrong {
+            border-color: #ef5350;
+            background: #ffe8e8;
+        }
+        .choice-btn.show-correct {
+            border-color: #26a65b;
+            background: #e0f5e3;
+        }
+        .result {
+            min-height: 40px;
+            font-weight: 700;
+            font-size: 20px;
+            margin: 12px 0;
+        }
+        .ok {
+            color: #1f7a3a;
+        }
+        .bad {
+            color: #c62828;
+        }
+        .muted {
+            color: #3d5f8a;
+        }
+        .small {
+            font-size: 13px;
+        }
+        .flex {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+        .convo-scene {
+            background: #e8effa;
+            border-radius: 18px;
+            padding: 16px;
+            margin: 12px 0;
+            border-left: 6px solid #1a6bb0;
+            color: #0a2a5e;
+        }
+        .convo-scene .speaker-label {
+            font-weight: 700;
+            color: #0a2a5e;
+        }
+        .badge-gold {
+            background: #f5a623;
+            color: #ffffff;
+            padding: 4px 14px;
+            border-radius: 40px;
+            font-size: 13px;
+            font-weight: 700;
+        }
+        input,
+        select {
+            background: #ffffff;
+            color: #0a2a5e;
+            border: 2px solid #b8d4f0;
+            border-radius: 16px;
+            padding: 14px 16px;
+            font-size: 16px;
+            width: 100%;
+            outline: none;
+            font-family: inherit;
+        }
+        input::placeholder {
+            color: #7a9abb;
+        }
+        .score-display {
+            font-size: 18px;
+            font-weight: 700;
+            color: #0a2a5e;
+            padding: 8px 16px;
+            background: #e8effa;
+            border-radius: 12px;
+            display: inline-block;
+        }
+        .score-display .score-value {
+            color: #1a6bb0;
+        }
+        .progress-bar-outer {
+            height: 16px;
+            background: #d0e0f5;
+            border-radius: 40px;
+            overflow: hidden;
+            margin: 10px 0 4px;
+            border: 1px solid #b8d4f0;
+        }
+        .progress-bar-inner {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, #26a65b, #4fd483);
+            transition: width .3s;
+        }
+        .progress-label {
+            font-size: 13px;
+            font-weight: 700;
+            color: #3d5f8a;
+            margin-bottom: 2px;
+        }
+        .tab-btn-locked {
+            opacity: .5;
+            cursor: not-allowed !important;
+            position: relative;
+        }
+        .stage-lock-note {
+            font-size: 12px;
+            color: #c62828;
+            font-weight: 700;
+            margin-top: 4px;
+        }
+        .write-item {
+            background: #ffffff;
+            border: 2px solid #c8daf0;
+            border-radius: 16px;
+            padding: 14px;
+            margin-bottom: 12px;
+            color: #0a2a5e;
+        }
+        .write-item .wsrc {
+            font-size: 22px;
+            font-weight: 900;
+            color: #0a2a5e;
+            margin-bottom: 6px;
+        }
+        .write-item .wsrc.phrase {
+            font-size: 18px;
+        }
+        .write-item input {
+            margin: 6px 0 0;
+        }
+        .write-item.done {
+            border-color: #26a65b;
+            background: #f2fbf5;
+        }
+        .task-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background: #e8effa;
+            border-radius: 14px;
+            padding: 12px 16px;
+            margin-bottom: 8px;
+            border-left: 6px solid #ffd84d;
+            color: #0a2a5e;
+        }
+        .task-item.done {
+            border-left-color: #26a65b;
+            background: #e0f5e3;
+        }
+        .task-item.locked {
+            opacity: 0.5;
+            filter: grayscale(0.6);
+        }
+        .flag-icon {
+            font-size: 28px;
+            margin-right: 4px;
+        }
+        /* 登录按钮特殊样式 */
+        .login-btn {
+            background: #ffd84d;
+            color: #0a2a5e;
+            font-weight: 800;
+            padding: 14px;
+            border-radius: 16px;
+            border: none;
+            width: 100%;
+            font-size: 18px;
+            cursor: pointer;
+            transition: .15s;
+        }
+        .login-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+        }
+    </style>
+</head>
+<body>
+    <div class="app">
+        <div class="top">
+            <div class="brand">
+                <div class="logo">🇩🇪</div>
+                <div>
+                    <h1 style="color:#ffffff;">Deutsch Quest V7</h1>
+                    <div class="small" style="color:#ffffff;">A1-A2 · 50课 · 渐进式 · 循环复习</div>
+                </div>
+            </div>
+            <div class="badge" id="topStatus" style="color:#ffffff;">未登录</div>
+        </div>
+
+        <!-- LOGIN -->
+        <section id="login" class="screen active">
+            <div class="panel" style="max-width:500px;margin:20px auto;">
+                <h2>👋 Willkommen</h2>
+                <p style="color:#3d5f8a;">登录或注册 · 进度自动保存</p>
+                <select id="loginAccount" onchange="selectSavedAccount()" style="margin:8px 0;">
+                    <option value="">👤 选择已保存账号（可不选）</option>
+                </select>
+                <input id="loginName" placeholder="用户名 (z.B. Lena)" style="margin:8px 0;">
+                <input id="loginPass" type="password" placeholder="密码" style="margin:8px 0;">
+                <button class="login-btn" onclick="login()">🚀 开始冒险</button>
+                <p class="small muted" style="margin-top:12px;">每课需100%任务完成解锁下一课</p>
+                <p class="small muted" style="margin-top:4px;">答对加分 · 答错扣分 (最低0分)</p>
+                <div style="margin-top:12px;padding:10px;background:#e8effa;border-radius:12px;font-size:13px;color:#3d5f8a;">
+                    💡 提示：如无法登录，请尝试 <b>清除浏览器缓存</b> 或使用 <b>无痕模式</b>
+                </div>
+            </div>
+        </section>
+
+        <!-- ROLES -->
+        <section id="roles" class="screen">
+            <h2 style="color:#0a2a5e;">🧑‍🤝‍🧑 选择你的学习伙伴</h2>
+            <p style="color:#3d5f8a;margin-bottom:16px;">每个伙伴鼓励风格不同，知识点完全一样！</p>
+            <div class="grid" id="roleGrid"></div>
+        </section>
+
+        <!-- HOME -->
+        <section id="home" class="screen">
+            <div class="dashboard">
+                <div class="panel profile">
+                    <div class="avatar" id="avatar">🐻</div>
+                    <h2 id="welcome">Hallo!</h2>
+                    <p id="partnerText" class="muted" style="font-size:15px;"></p>
+                    <div class="xpbar"><div id="xpfill" class="xpfill"></div></div>
+                    <b id="xpText">XP 0 / 100</b>
+                    <div style="margin:12px 0;font-size:14px;color:#3d5f8a;"><span id="unlockedCount">0</span> / 50 课已解锁</div>
+                    <div id="dqLic" style="margin:10px auto 14px;max-width:340px;text-align:left;font-size:13px;color:#3d5f8a;">
+                        <div id="dqLicStatus" style="margin-bottom:6px;"></div>
+                        <div style="display:flex;gap:6px;"><input id="dqCode" placeholder="DQA1-XXXX-XXXX" autocomplete="off" style="flex:1;min-width:0;padding:8px;border-radius:8px;border:1px solid #b9c7dd;"><button class="secondary" onclick="dqRedeem()">🔑 兑换</button></div>
+                    </div>
+                    <div class="flex" style="justify-content:center;">
+                        <button class="secondary" onclick="show('lessons')">📖 课程</button>
+                        <button class="secondary" onclick="showLibrary()">📚 词库</button>
+                        <button class="secondary" onclick="startMixedGame()">🏆 混合闯关</button>
+                        <button class="secondary" onclick="logout()">🚪 退出</button>
+                    </div>
+                </div>
+                <div>
+                    <h2 style="color:#0a2a5e;">⭐ 今日任务</h2>
+                    <div id="todayTasks" class="panel" style="background:rgba(240, 246, 255, 0.92);"></div>
+                    <div style="margin-top:16px;background:rgba(255,255,255,.08);border-radius:18px;padding:14px;">
+                        <h3 style="color:#0a2a5e;">📌 闯关规则</h3>
+                        <ul style="font-size:14px;color:#3d5f8a;padding-left:20px;">
+                            <li><b>100%任务完成</b> 解锁下一课</li>
+                            <li>看图选词 <b>+10</b> · 拼写 <b>+15</b> · 变位 <b>+80</b></li>
+                            <li>任何错误 <b>−5</b> (最低0分)</li>
+                            <li>拼写严格匹配 · 空格算错</li>
+                            <li>动词变位不区分大小写</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- LESSONS -->
+        <section id="lessons" class="screen">
+            <h2 style="color:#0a2a5e;">🗺️ 50课闯关地图</h2>
+            <p style="color:#3d5f8a;">✅ 完成 · ⭐ 可学 · 🔒 未解锁 (需前置100%)</p>
+            <div class="grid" id="lessonGrid"></div>
+            <div style="margin-top:20px;"><button class="secondary" onclick="show('home')">🏠 返回</button></div>
+        </section>
+
+        <!-- LESSON DETAIL -->
+        <section id="lessonDetail" class="screen">
+            <h2 id="lessonTitle" style="color:#0a2a5e;"></h2>
+            <div id="lessonSub" class="muted" style="color:#3d5f8a;"></div>
+            <div id="lessonProgress" style="margin:10px 0;font-weight:700;color:#0a2a5e;"></div>
+            <div class="flex">
+                <button onclick="renderWords()" id="tabWords">📚 单词卡</button>
+                <button onclick="renderPhrases()" id="tabPhrases">💬 常用语</button>
+                <button onclick="renderDialog()" id="tabDialog">🗣️ 对话</button>
+                <button onclick="tryOpenStage('write')" id="tabWrite">✍️ 抄写练习</button>
+                <button onclick="tryOpenStage('game')" id="tabGame">🖼️ 看图选词</button>
+                <button onclick="tryOpenStage('spell')" id="tabSpell">⌨️ 拼写</button>
+                <button onclick="tryOpenStage('verb')" id="verbTabBtn">🔤 变位</button>
+                <button class="secondary" onclick="show('lessons')">← 返回</button>
+            </div>
+            <div id="stageLockNote" class="stage-lock-note"></div>
+            <div id="lessonContent" style="margin-top:16px;"></div>
+            <div id="taskStatus" style="margin-top:16px;"></div>
+        </section>
+
+        <!-- LIBRARY -->
+        <section id="library" class="screen">
+            <h2 style="color:#0a2a5e;">📚 总词库</h2>
+            <p style="color:#3d5f8a;"><span id="wordCount"></span> 个核心词</p>
+            <input id="search" placeholder="🔍 搜索中文 / Deutsch / Lektion" oninput="renderLibrary()" style="margin:10px 0;">
+            <div id="libraryBox" class="panel" style="max-height:500px;overflow:auto;"></div>
+            <button class="secondary" onclick="show('home')" style="margin-top:12px;">🏠 返回</button>
+        </section>
+
+        <!-- GAME -->
+        <section id="game" class="screen">
+            <div class="panel">
+                <h2 id="gameTitle" style="color:#0a2a5e;">🖼️ 看图选词</h2>
+                <p id="gameHint" style="color:#3d5f8a;"></p>
+                <div class="progress-label" id="gameProgressLabel" style="color:#3d5f8a;">进度 0 / 0</div>
+                <div class="progress-bar-outer"><div id="gameProgressBar" class="progress-bar-inner"></div></div>
+                <div class="result" id="question" style="font-size:36px;font-weight:900;color:#0a2a5e;">Apfel</div>
+                <div class="choice-grid" id="choices"></div>
+                <div id="gameResult" class="result"></div>
+                <div id="gameScoreDisplay" class="score-display" style="margin:8px 0;">🏆 得分: <span class="score-value" id="gameScore">0</span></div>
+                <button id="nextBtn" onclick="nextQuestion()" style="display:none;">➡️ 下一题</button>
+                <div style="margin-top:12px;"><button class="secondary" onclick="backToLesson()">📖 返回课程</button></div>
+            </div>
+        </section>
+
+        <!-- SPELL -->
+        <section id="spell" class="screen">
+            <div class="panel">
+                <h2 style="color:#0a2a5e;">⌨️ 拼写挑战</h2>
+                <p style="color:#3d5f8a;">看中文 / 图片，输入德语 <b style="color:#c62828;">严格匹配 · 空格算错 · 必须拼对才能下一词</b></p>
+                <div class="progress-label" id="spellProgressLabel" style="color:#3d5f8a;">进度 0 / 0</div>
+                <div class="progress-bar-outer"><div id="spellProgressBar" class="progress-bar-inner"></div></div>
+                <div style="font-size:60px;text-align:center;" id="spellPic">🍎</div>
+                <h2 style="text-align:center;color:#0a2a5e;" id="spellZh">苹果</h2>
+                <input id="spellInput" placeholder="z.B. Apfel" onkeydown="if(event.key==='Enter')checkSpell()">
+                <div id="spellResult" class="result"></div>
+                <div id="spellScoreDisplay" class="score-display" style="margin:8px 0;">🏆 得分: <span class="score-value" id="spellScore">0</span></div>
+                <button id="spellCheckBtn" onclick="checkSpell()">✅ 检查</button>
+                <button id="spellNext" onclick="nextSpell()" style="display:none;">➡️ 下一词</button>
+                <div style="margin-top:12px;"><button class="secondary" onclick="backToLesson()">📖 返回课程</button></div>
+            </div>
+        </section>
+
+        <!-- VERB -->
+        <section id="verbGame" class="screen">
+            <div class="panel">
+                <h2 style="color:#0a2a5e;">🔤 动词变位训练</h2>
+                <p id="verbHint" style="color:#3d5f8a;">填入正确形式 (不区分大小写) · 全部正确才能通过</p>
+                <div class="progress-label" id="verbProgressLabel" style="color:#3d5f8a;">进度 0 / 0</div>
+                <div class="progress-bar-outer"><div id="verbProgressBar" class="progress-bar-inner"></div></div>
+                <div id="verbContent"></div>
+                <div id="verbResult" class="result"></div>
+                <div id="verbScoreDisplay" class="score-display" style="margin:8px 0;">🏆 得分: <span class="score-value" id="verbScore">0</span></div>
+                <div style="margin-top:12px;"><button class="secondary" onclick="backToLesson()">📖 返回课程</button></div>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        // ============================================================
+        //  DATA · 50 Lektionen
+        // ============================================================
+        const LESSONS = [];
+
+        function L(id, title, theme, words, phrases, dialogs, verbData) {
+            return { id, title, theme, words, phrases, dialogs: dialogs || [], verbData: verbData || null };
+        }
+
+        function w(de, zh, pic) { return [de, zh, pic]; }
+
+        // ---- Lektion 1-5: 基础 ----
+        LESSONS.push(L(1, "Hallo! 问候", "👋", [
+            w("Hallo", "你好", "👋"),
+            w("Tschüss", "再见", "🚶"),
+            w("Danke", "谢谢", "🙏"),
+            w("Bitte", "请/不客气", "🤲"),
+            w("ja", "是", "✅"),
+            w("nein", "不", "❌"),
+            w("gut", "好", "👍"),
+            w("schlecht", "不好", "👎"),
+            w("Lehrer", "老师", "👨‍🏫"),
+            w("Schüler", "学生", "🧒"),
+            w("Buch", "书", "📘"),
+            w("Stift", "笔", "✏️")
+        ], ["Hallo!", "Tschüss!", "Danke!", "Bitte!", "Wie geht's?", "Mir geht's gut."],
+        [{ sp: "Lehrer", en: "老师", lines: ["A: Guten Morgen, Herr Lehrer!", "B: Guten Morgen! Wie geht es dir?"] }],
+        { verb: "sein", forms: { "ich": "bin", "du": "bist", "er / sie / es": "ist", "wir": "sind", "ihr": "seid",
+                "sie / Sie": "sind" } }
+        ));
+
+        LESSONS.push(L(2, "Ich heiße... 介绍", "🪪", [
+            w("ich", "我", "🙋"),
+            w("du", "你", "👉"),
+            w("er", "他", "🙋‍♂️"),
+            w("sie", "她", "🙋‍♀️"),
+            w("wir", "我们", "👨‍👩‍👧"),
+            w("Name", "名字", "📛"),
+            w("Junge", "男孩", "👦"),
+            w("Mädchen", "女孩", "👧"),
+            w("Kind", "孩子", "🧒"),
+            w("Freund", "朋友", "🤝"),
+            w("Deutschland", "德国", "🇩🇪"),
+            w("China", "中国", "🇨🇳")
+        ], ["Ich heiße Leo.", "Wie heißt du?", "Ich komme aus China.", "Ich bin ein Schüler."],
+        [{ sp: "Anna", en: "安娜", lines: ["A: Hallo! Ich heiße Anna.", "B: Hallo Anna! Ich heiße Tom.",
+                "A: Woher kommst du?", "B: Ich komme aus China."] }],
+        { verb: "heißen", forms: { "ich": "heiße", "du": "heißt", "er / sie / es": "heißt", "wir": "heißen",
+                "ihr": "heißt", "sie / Sie": "heißen" } }
+        ));
+
+        LESSONS.push(L(3, "Zahlen 1-20", "🔢", [
+            w("eins", "一", "1️⃣"),
+            w("zwei", "二", "2️⃣"),
+            w("drei", "三", "3️⃣"),
+            w("vier", "四", "4️⃣"),
+            w("fünf", "五", "5️⃣"),
+            w("sechs", "六", "6️⃣"),
+            w("sieben", "七", "7️⃣"),
+            w("acht", "八", "8️⃣"),
+            w("neun", "九", "9️⃣"),
+            w("zehn", "十", "🔟"),
+            w("elf", "十一", "1️⃣1️⃣"),
+            w("zwölf", "十二", "1️⃣2️⃣")
+        ], ["Ich bin elf.", "Wie alt?", "Zwei Bücher.", "Zehn Euro."],
+        [{ sp: "Tom", en: "汤姆", lines: ["A: Wie alt?", "B: Zwölf.", "A: Ich bin elf."] }], null
+        ));
+
+        LESSONS.push(L(4, "Farben 颜色", "🎨", [
+            w("rot", "红色", "🔴"),
+            w("blau", "蓝色", "🔵"),
+            w("gelb", "黄色", "🟡"),
+            w("grün", "绿色", "🟢"),
+            w("schwarz", "黑色", "⚫"),
+            w("weiß", "白色", "⚪"),
+            w("braun", "棕色", "🟤"),
+            w("rosa", "粉色", "🌸"),
+            w("orange", "橙色", "🟠"),
+            w("lila", "紫色", "🟣")
+        ], ["Der Ball ist blau.", "Meine Tasche ist rot.", "Welche Farbe?", "Das ist bunt!"],
+        [{ sp: "Lena", en: "莱娜", lines: ["A: Welche Farbe?", "B: Braun.", "A: Schwarz-weiß."] }], null
+        ));
+
+        LESSONS.push(L(5, "Familie 家庭", "👨‍👩‍👧", [
+            w("Mama", "妈妈", "👩"),
+            w("Papa", "爸爸", "👨"),
+            w("Mutter", "母亲", "母亲"),
+            w("Vater", "父亲", "父亲"),
+            w("Bruder", "兄弟", "👦"),
+            w("Schwester", "姐妹", "👧"),
+            w("Oma", "奶奶", "👵"),
+            w("Opa", "爷爷", "👴"),
+            w("Familie", "家庭", "👨‍👩‍👧"),
+            w("Baby", "宝宝", "👶"),
+            w("Eltern", "父母", "👪"),
+            w("Cousin", "表兄弟", "🧒")
+        ], ["Meine Mama.", "Ich habe Bruder.", "Große Familie.", "Mein Vater."],
+        [{ sp: "Emma", en: "艾玛", lines: ["A: Meine Familie.", "B: Wer?", "A: Mama.", "B: Bruder?"] }],
+        { verb: "haben", forms: { "ich": "habe", "du": "hast", "er / sie / es": "hat", "wir": "haben", "ihr": "habt",
+                "sie / Sie": "haben" } }
+        ));
+
+        const lessonTitles = [
+            "Schule 学校", "Tiere 动物", "Obst 水果", "Essen 食物", "Körper 身体",
+            "Kleidung 衣服", "Zuhause 家里", "Spielzeug 玩具", "Verben 1 动作", "Verben 2 日常",
+            "Wetter 天气", "Wochentage 星期", "Monate 月份", "Zeit 时间", "Sport 运动",
+            "Gefühle 情绪", "Orte 地点", "Verkehr 交通", "Einkaufen 购物", "Restaurant 餐厅",
+            "Grammatik sein", "Grammatik haben", "Fragen 提问", "Präpositionen 位置", "Adjektive 形容词",
+            "Natur 自然", "Geburtstag 生日", "Hobbys 爱好", "Medien 电子", "Gesundheit 健康",
+            "Reisen 旅行", "Deutschland 文化", "Alltag 日常", "Dialoge 综合", "A1 Prüfung",
+            "A2 Perfekt", "A2 Modalverben", "A2 Nebensätze", "A2 Dativ/Akkusativ", "A2 Adjektivdeklination",
+            "A2 Reflexiv", "A2 Temporal", "A2 Komparativ", "A2 Genitiv", "A2 Finale"
+        ];
+        const lessonThemes = ["🏫", "🐶", "🍎", "🍽️", "🧍", "👕", "🏠", "🧸", "🏃", "🌅", "☀️", "📅", "🗓️", "🕒", "⚽", "😊",
+            "📍", "🚌", "🛒", "🍴", "🧩", "🎒", "❓", "📦", "✨", "🌳", "🎂", "🎮", "💻", "🏥", "🧳", "🇩🇪", "🏡", "💬", "🏆",
+            "⏳", "🔧", "🔗", "🗝️", "🌈", "🔄", "🕰️", "📊", "🔑", "🎓"
+        ];
+
+        // ---- Lektion 6-50: 每课主题词汇严格匹配课程标题 ----
+        // 每课: words(严格属于该主题) / phrases(4句常用句) / verbData(可选动词变位)
+        // A2 课程 (41-50) 额外补充 A2 语法相关新词与常用句
+        function vb(verb, ich, du, er, wir, ihr, sie) {
+            // 标准6行变位表：ich / du / er,sie,es(合并一行) / wir / ihr / sie,Sie(合并一行)
+            // 之前版本用重复的"sie"键会互相覆盖，导致该行显示错误的变位形式，现已修复为清晰的6个不重复键。
+            return { verb, forms: { "ich": ich, "du": du, "er / sie / es": er, "wir": wir, "ihr": ihr, "sie / Sie": sie } };
+        }
+
+        const lessonData = [
+            // 6 Schule 学校
+            { words: [w("Schule","学校","🏫"),w("Klasse","班级","🎓"),w("Tafel","黑板","⬛"),w("Tisch","桌子","🍽️"),
+                w("Stuhl","椅子","💺"),w("Heft","本子","📒"),w("Lineal","尺子","📏"),w("Radiergummi","橡皮","⬜"),
+                w("Tasche","书包","🎒"),w("Kleber","胶水","🧴")],
+                phrases: ["Ich gehe in die Schule.","Das ist mein Heft.","Die Tafel ist schwarz.","Ich sitze auf dem Stuhl."],
+                verb: vb("lernen","lerne","lernst","lernt","lernen","lernt","lernen") },
+            // 7 Tiere 动物
+            { words: [w("Hund","狗","🐶"),w("Katze","猫","🐱"),w("Fisch","鱼","🐟"),w("Vogel","鸟","🐦"),
+                w("Pferd","马","🐴"),w("Kuh","奶牛","🐄"),w("Schwein","猪","🐷"),w("Hase","兔子","🐰"),
+                w("Maus","老鼠","🐭"),w("Bär","熊","🐻"),w("Ente","鸭子","🦆"),w("Tiger","老虎","🐯")],
+                phrases: ["Der Hund bellt.","Die Katze schläft.","Ich habe einen Hund.","Das Pferd läuft schnell."],
+                verb: null },
+            // 8 Obst 水果
+            { words: [w("Apfel","苹果","🍎"),w("Banane","香蕉","🍌"),w("Orange","橙子","🍊"),w("Birne","梨","🍐"),
+                w("Traube","葡萄","🍇"),w("Erdbeere","草莓","🍓"),w("Zitrone","柠檬","🍋"),w("Melone","西瓜","🍉"),
+                w("Kirsche","樱桃","🍒"),w("Pfirsich","桃子","🍑")],
+                phrases: ["Ich esse einen Apfel.","Die Banane ist gelb.","Magst du Erdbeeren?","Der Apfel ist süß."],
+                verb: null },
+            // 9 Essen 食物
+            { words: [w("Brot","面包","🍞"),w("Milch","牛奶","🥛"),w("Wasser","水","💧"),w("Saft","果汁","🧃"),
+                w("Käse","奶酪","🧀"),w("Ei","鸡蛋","🥚"),w("Reis","米饭","🍚"),w("Nudeln","面条","🍜"),
+                w("Suppe","汤","🍲"),w("Kuchen","蛋糕","🍰")],
+                phrases: ["Ich trinke Wasser.","Das Brot ist frisch.","Ich esse gern Suppe.","Der Kuchen schmeckt gut."],
+                verb: vb("essen","esse","isst","isst","essen","esst","essen") },
+            // 10 Körper 身体
+            { words: [w("Kopf","头","🗣️"),w("Auge","眼睛","👁️"),w("Nase","鼻子","👃"),w("Mund","嘴","👄"),
+                w("Ohr","耳朵","👂"),w("Hand","手","✋"),w("Arm","胳膊","💪"),w("Bein","腿","🦵"),
+                w("Fuß","脚","🦶"),w("Haar","头发","💇")],
+                phrases: ["Ich habe zwei Hände.","Mein Kopf tut weh.","Die Nase ist klein.","Meine Augen sind braun."],
+                verb: null },
+            // 11 Kleidung 衣服
+            { words: [w("Hemd","衬衫","👔"),w("Hose","裤子","👖"),w("Kleid","连衣裙","👗"),w("Rock","裙子","裙子"),
+                w("Jacke","夹克","🧥"),w("Mantel","大衣","🥶"),w("Schuhe","鞋子","👞"),w("Socken","袜子","🧦"),
+                w("Mütze","帽子","🧢"),w("Pullover","毛衣","🧶")],
+                phrases: ["Ich trage eine Jacke.","Die Hose ist blau.","Meine Schuhe sind neu.","Er trägt einen Pullover."],
+                verb: vb("tragen","trage","trägst","trägt","tragen","tragt","tragen") },
+            // 12 Zuhause 家里
+            { words: [w("Haus","房子","🏠"),w("Zimmer","房间","🖼️"),w("Küche","厨房","🍳"),w("Bad","浴室","🛁"),
+                w("Garten","花园","🌳"),w("Tür","门","🚪"),w("Fenster","窗户","窗户"),w("Bett","床","🛏️"),
+                w("Sofa","沙发","🛋️"),w("Lampe","灯","💡")],
+                phrases: ["Wir wohnen in einem Haus.","Die Küche ist groß.","Ich schlafe im Bett.","Das Fenster ist offen."],
+                verb: vb("wohnen","wohne","wohnst","wohnt","wohnen","wohnt","wohnen") },
+            // 13 Spielzeug 玩具
+            { words: [w("Puppe","娃娃","娃娃"),w("Ball","球","⚽"),w("Auto","汽车","🚗"),w("Bauklötze","积木","🧱"),
+                w("Teddybär","泰迪熊","🧸"),w("Drachen","风筝","风筝"),w("Puzzle","拼图","🧩"),w("Roboter","机器人","🤖"),
+                w("Luftballon","气球","🎈"),w("Brettspiel","桌游","🎲")],
+                phrases: ["Ich spiele mit dem Ball.","Der Teddybär ist weich.","Wir spielen ein Brettspiel.","Das ist mein Auto."],
+                verb: vb("spielen","spiele","spielst","spielt","spielen","spielt","spielen") },
+            // 14 Verben 1 动作
+            { words: [w("gehen","去","🚶"),w("kommen","来","🚗"),w("machen","做","🔨"),w("sehen","看","👀"),
+                w("lesen","读","📖"),w("schreiben","写","✍️"),w("essen","吃","🍽️"),w("trinken","喝","🥤"),
+                w("laufen","跑","🏃"),w("springen","跳","🤸")],
+                phrases: ["Ich gehe zur Schule.","Wir gehen ins Kino.","Er liest ein Buch.","Die Kinder laufen schnell."],
+                verb: vb("gehen","gehe","gehst","geht","gehen","geht","gehen") },
+            // 15 Verben 2 日常
+            { words: [w("aufstehen","起床","⏰"),w("waschen","洗","🧼"),w("anziehen","穿衣","👕"),w("frühstücken","吃早饭","🥐"),
+                w("arbeiten","工作","💼"),w("kochen","做饭","🍳"),w("aufräumen","收拾","🧹"),w("fernsehen","看电视","📺"),
+                w("duschen","淋浴","🚿"),w("schlafen","睡觉","😴")],
+                phrases: ["Ich stehe um 7 Uhr auf.","Wir kochen zusammen.","Er räumt sein Zimmer auf.","Am Abend sehe ich fern."],
+                verb: vb("kochen","koche","kochst","kocht","kochen","kocht","kochen") },
+            // 16 Wetter 天气
+            { words: [w("Sonne","太阳","☀️"),w("Regen","雨","🌧️"),w("Schnee","雪","❄️"),w("Wind","风","💨"),
+                w("Wolke","云","☁️"),w("Gewitter","雷雨","⛈️"),w("warm","温暖","🌡️"),w("kalt","冷","🥶"),
+                w("windig","有风","🍃"),w("sonnig","晴朗","🌞")],
+                phrases: ["Heute ist es sonnig.","Es regnet stark.","Im Winter schneit es.","Das Wetter ist kalt."],
+                verb: null },
+            // 17 Wochentage 星期
+            { words: [w("Montag","星期一","星期一"),w("Dienstag","星期二","星期二"),w("Mittwoch","星期三","星期三"),
+                w("Donnerstag","星期四","星期四"),w("Freitag","星期五","星期五"),w("Samstag","星期六","星期六"),w("Sonntag","星期天","星期天")],
+                phrases: ["Heute ist Montag.","Am Freitag habe ich frei.","Welcher Tag ist heute?","Am Wochenende schlafe ich lange."],
+                verb: null },
+            // 18 Monate 月份
+            { words: [w("Januar","一月","一月"),w("Februar","二月","二月"),w("März","三月","三月"),w("April","四月","四月"),
+                w("Mai","五月","五月"),w("Juni","六月","六月"),w("Juli","七月","七月"),w("August","八月","八月"),
+                w("September","九月","九月"),w("Oktober","十月","十月"),w("November","十一月","十一月"),w("Dezember","十二月","十二月")],
+                phrases: ["Mein Geburtstag ist im Mai.","Der Winter beginnt im Dezember.","Wie viele Monate hat ein Jahr?","Im August ist es heiß."],
+                verb: null },
+            // 19 Zeit 时间
+            { words: [w("Uhr","点/钟","🕐"),w("Minute","分钟","⏱️"),w("Stunde","小时","⏰"),w("Morgen","早晨","🌅"),
+                w("Mittag","中午","☀️"),w("Abend","晚上","🌆"),w("Nacht","夜晚","🌙"),w("heute","今天","📅"),
+                w("morgen","明天","➡️"),w("gestern","昨天","⬅️")],
+                phrases: ["Wie spät ist es?","Es ist acht Uhr.","Heute Abend gehe ich aus.","Gestern war ich zu Hause."],
+                verb: null },
+            // 20 Sport 运动
+            { words: [w("Fußball","足球","⚽"),w("Basketball","篮球","🏀"),w("Schwimmen","游泳","🏊"),w("Tennis","网球","🎾"),
+                w("Radfahren","骑自行车","🚴"),w("Turnen","体操","🤸"),w("Mannschaft","团队","👥"),w("Training","训练","💪"),
+                w("Sieger","冠军","🏆"),w("Wettkampf","比赛","🥇")],
+                phrases: ["Ich spiele gern Fußball.","Er läuft jeden Tag.","Wir trainieren zusammen.","Sie schwimmt sehr gut."],
+                verb: vb("laufen","laufe","läufst","läuft","laufen","lauft","laufen") },
+            // 21 Gefühle 情绪
+            { words: [w("glücklich","开心","😊"),w("traurig","难过","😢"),w("wütend","生气","😠"),w("müde","累","😴"),
+                w("aufgeregt","激动","😃"),w("ängstlich","害怕","😨"),w("überrascht","惊讶","😲"),w("gelangweilt","无聊","😑"),
+                w("zufrieden","满意","😌"),w("nervös","紧张","😰")],
+                phrases: ["Ich bin glücklich.","Warum bist du traurig?","Er ist sehr müde.","Sie ist aufgeregt."],
+                verb: null },
+            // 22 Orte 地点
+            { words: [w("Park","公园","🌳"),w("Museum","博物馆","🏛️"),w("Kino","电影院","🎬"),w("Supermarkt","超市","🛒"),
+                w("Bibliothek","图书馆","📚"),w("Bäckerei","面包店","🥐"),w("Zoo","动物园","🦁"),w("Spielplatz","游乐场","🎠"),
+                w("Kirche","教堂","⛪"),w("Bahnhof","火车站","🚉")],
+                phrases: ["Ich gehe in den Park.","Das Museum ist interessant.","Wir treffen uns im Kino.","Der Supermarkt ist groß."],
+                verb: null },
+            // 23 Verkehr 交通
+            { words: [w("Auto","汽车","🚗"),w("Bus","公交车","🚌"),w("Zug","火车","🚆"),w("Fahrrad","自行车","🚲"),
+                w("Flugzeug","飞机","✈️"),w("Straßenbahn","有轨电车","🚊"),w("U-Bahn","地铁","🚇"),w("Taxi","出租车","🚕"),
+                w("Ampel","红绿灯","🚦"),w("Straße","街道","🛣️")],
+                phrases: ["Ich fahre mit dem Bus.","Der Zug kommt pünktlich.","Er fährt Fahrrad zur Arbeit.","Die Ampel ist rot."],
+                verb: vb("fahren","fahre","fährst","fährt","fahren","fahrt","fahren") },
+            // 24 Einkaufen 购物
+            { words: [w("Geld","钱","💰"),w("Preis","价格","🏷️"),w("Kasse","收银台","💳"),w("Rabatt","折扣","🔖"),
+                w("Einkaufswagen","购物车","🛒"),w("Kunde","顾客","🧑‍🤝‍🧑"),w("Verkäufer","售货员","🧑‍💼"),w("billig","便宜","💲"),
+                w("teuer","贵","💸"),w("bezahlen","付款","🧾")],
+                phrases: ["Wie viel kostet das?","Ich kaufe ein neues Hemd.","Das ist zu teuer.","Ich bezahle an der Kasse."],
+                verb: vb("kaufen","kaufe","kaufst","kauft","kaufen","kauft","kaufen") },
+            // 25 Restaurant 餐厅
+            { words: [w("Speisekarte","菜单","📋"),w("Kellner","服务员","🧑‍🍳"),w("Rechnung","账单","🧾"),w("Vorspeise","前菜","🥗"),
+                w("Hauptgericht","主菜","🍽️"),w("Nachtisch","甜点","🍮"),w("Getränk","饮料","🥤"),w("Reservierung","预订","📅"),
+                w("Trinkgeld","小费","💵"),w("lecker","好吃","😋")],
+                phrases: ["Ich möchte bestellen.","Ich trinke einen Saft.","Die Rechnung, bitte.","Das Essen ist lecker."],
+                verb: vb("trinken","trinke","trinkst","trinkt","trinken","trinkt","trinken") },
+            // 26 Grammatik sein
+            { words: [w("müde","累","😴"),w("glücklich","开心","😊"),w("krank","生病","🤒"),w("hungrig","饿","😋"),
+                w("durstig","渴","🥤"),w("fertig","完成","✅"),w("bereit","准备好","👍"),w("traurig","难过","😢"),
+                w("froh","高兴","😄"),w("wach","清醒","👀")],
+                phrases: ["Ich bin müde.","Wir sind fertig.","Sie ist krank.","Seid ihr bereit?"],
+                verb: vb("sein","bin","bist","ist","sind","seid","sind") },
+            // 27 Grammatik haben
+            { words: [w("Zeit","时间","⏰"),w("Hunger","饥饿","😋"),w("Durst","口渴","🥤"),w("Angst","害怕","😨"),
+                w("Glück","运气","🍀"),w("Idee","主意","💡"),w("Frage","问题","❓"),w("Antwort","回答","💬"),
+                w("Termin","预约","📅"),w("Erkältung","感冒","🤧")],
+                phrases: ["Ich habe Hunger.","Hast du Zeit?","Wir haben eine Frage.","Er hat eine Erkältung."],
+                verb: vb("haben","habe","hast","hat","haben","habt","haben") },
+            // 28 Fragen 提问
+            { words: [w("wer","谁","🙋"),w("was","什么","❓"),w("wo","哪里","📍"),w("wann","何时","⏰"),
+                w("warum","为什么","❗"),w("wie","怎样","🤷"),w("welche","哪个","☑️"),w("wie viel","多少(不可数)","💰"),
+                w("wie viele","多少(可数)","🔢"),w("woher","从哪来","🌍")],
+                phrases: ["Wer bist du?","Wo wohnst du?","Wann beginnt der Unterricht?","Warum lernst du Deutsch?"],
+                verb: null },
+            // 29 Präpositionen 位置
+            { words: [w("in","在...里","📥"),w("auf","在...上","⬆️"),w("unter","在...下","⬇️"),w("neben","在...旁边","↔️"),
+                w("vor","在...前","⏪"),w("hinter","在...后","⏩"),w("zwischen","在...之间","🔀"),w("über","在...上方","🔝"),
+                w("an","在...边","📌"),w("bei","在...那里","📍")],
+                phrases: ["Das Buch ist auf dem Tisch.","Die Katze ist unter dem Stuhl.","Er steht neben mir.","Das Bild hängt über dem Sofa."],
+                verb: null },
+            // 30 Adjektive 形容词
+            { words: [w("groß","大","⬆️"),w("klein","小","⬇️"),w("alt","老/旧","👴"),w("neu","新","✨"),
+                w("schön","漂亮","😍"),w("hässlich","丑","🙁"),w("schnell","快","⚡"),w("langsam","慢","🐌"),
+                w("laut","吵","🔊"),w("leise","安静","🔉")],
+                phrases: ["Das Haus ist groß.","Mein Auto ist neu.","Die Musik ist zu laut.","Er ist sehr schnell."],
+                verb: null },
+            // 31 Natur 自然
+            { words: [w("Baum","树","🌳"),w("Blume","花","🌸"),w("Berg","山","⛰️"),w("Fluss","河","🏞️"),
+                w("Wald","森林","🌲"),w("Himmel","天空","🌌"),w("Mond","月亮","🌙"),w("Stern","星星","⭐"),
+                w("See","湖","🌊"),w("Insel","岛屿","🏝️")],
+                phrases: ["Der Baum ist hoch.","Die Blumen sind bunt.","Wir wandern im Wald.","Die Sterne leuchten in der Nacht."],
+                verb: null },
+            // 32 Geburtstag 生日
+            { words: [w("Geburtstag","生日","🎂"),w("Geschenk","礼物","🎁"),w("Kerze","蜡烛","🕯️"),w("Torte","蛋糕","🍰"),
+                w("Party","派对","🎉"),w("Luftballon","气球","🎈"),w("Karte","贺卡","💌"),w("feiern","庆祝","🎊"),
+                w("Gast","客人","👥"),w("Wunsch","愿望","🌠")],
+                phrases: ["Herzlichen Glückwunsch zum Geburtstag!","Wir feiern meinen Geburtstag.","Ich bekomme ein Geschenk.","Die Torte schmeckt lecker."],
+                verb: vb("feiern","feiere","feierst","feiert","feiern","feiert","feiern") },
+            // 33 Hobbys 爱好
+            { words: [w("lesen","阅读","📖"),w("malen","画画","🎨"),w("singen","唱歌","🎤"),w("tanzen","跳舞","💃"),
+                w("fotografieren","摄影","📷"),w("basteln","手工","✂️"),w("angeln","钓鱼","🎣"),w("sammeln","收藏","🗂️"),
+                w("zeichnen","绘图","✏️"),w("musizieren","演奏音乐","🎻")],
+                phrases: ["Mein Hobby ist Lesen.","Ich lese jeden Abend.","Sie malt gern Bilder.","Er sammelt Briefmarken."],
+                verb: vb("lesen","lese","liest","liest","lesen","lest","lesen") },
+            // 34 Medien 电子
+            { words: [w("Handy","手机","📱"),w("Computer","电脑","💻"),w("Internet","网络","🌐"),w("E-Mail","邮件","📧"),
+                w("Foto","照片","📷"),w("Video","视频","🎥"),w("App","应用","📲"),w("Nachricht","消息","💬"),
+                w("Fernseher","电视","📺"),w("Kopfhörer","耳机","🎧")],
+                phrases: ["Ich schreibe eine E-Mail.","Er spielt am Computer.","Wir sehen ein Video.","Mein Handy ist neu."],
+                verb: vb("sehen","sehe","siehst","sieht","sehen","seht","sehen") },
+            // 35 Gesundheit 健康
+            { words: [w("Krankenhaus","医院","🏥"),w("Apotheke","药店","🏪"),w("Medizin","药","💊"),w("Fieber","发烧","🌡️"),
+                w("Husten","咳嗽","😷"),w("Schmerz","疼痛","🤕"),w("gesund","健康","💪"),w("krank","生病","🤒"),
+                w("Arzt","医生","🧑‍⚕️"),w("Impfung","疫苗","💉")],
+                phrases: ["Ich bin krank.","Ich habe Fieber.","Der Arzt hilft mir.","Nimm die Medizin!"],
+                verb: null },
+            // 36 Reisen 旅行
+            { words: [w("Reise","旅行","🧭"),w("Koffer","行李箱","🧳"),w("Pass","护照","🛂"),w("Hotel","酒店","🏨"),
+                w("Ticket","票","🎫"),w("Urlaub","假期","🏖️"),w("Flughafen","机场","✈️"),w("Gepäck","行李","🎒"),
+                w("Landkarte","地图","🗺️"),w("Ausland","国外","🌍")],
+                phrases: ["Wir fliegen nach Deutschland.","Ich packe meinen Koffer.","Wo ist mein Pass?","Der Urlaub beginnt morgen."],
+                verb: vb("fliegen","fliege","fliegst","fliegt","fliegen","fliegt","fliegen") },
+            // 37 Deutschland 文化
+            { words: [w("Berlin","柏林","🏙️"),w("München","慕尼黑","⛰️"),w("Brezel","碱水面包","🥨"),w("Wurst","香肠","🌭"),
+                w("Schloss","城堡","🏰"),w("Sprache","语言","🗣️"),w("Deutsch","德语","🇩🇪"),w("Oktoberfest","啤酒节","🍺"),
+                w("Weihnachtsmarkt","圣诞市场","🎄"),w("Bundesland","联邦州","🗺️")],
+                phrases: ["Berlin ist die Hauptstadt.","Ich spreche ein bisschen Deutsch.","Die Brezel schmeckt gut.","Wir besuchen das Schloss."],
+                verb: vb("sprechen","spreche","sprichst","spricht","sprechen","sprecht","sprechen") },
+            // 38 Alltag 日常
+            { words: [w("Wecker","闹钟","⏰"),w("Zahnbürste","牙刷","牙刷"),w("Hausaufgaben","家庭作业","📝"),w("Mittagessen","午饭","🍽️"),
+                w("Feierabend","下班","🕕"),w("Termin","约定","📅"),w("Einkaufsliste","购物清单","🛒"),w("Müll","垃圾","🗑️"),
+                w("Wäsche","衣物/洗衣","🧺"),w("Routine","日常安排","🔁")],
+                phrases: ["Ich putze meine Zähne.","Nach der Schule mache ich Hausaufgaben.","Ich schlafe um 22 Uhr.","Ich bringe den Müll raus."],
+                verb: vb("schlafen","schlafe","schläfst","schläft","schlafen","schlaft","schlafen") },
+            // 39 Dialoge 综合 (连接词)
+            { words: [w("und","和","➕"),w("aber","但是","⚖️"),w("oder","或者","❔"),w("weil","因为","➡️"),
+                w("dann","然后","⏭️"),w("zuerst","首先","1️⃣"),w("danach","之后","2️⃣"),w("außerdem","此外","✳️"),
+                w("trotzdem","尽管如此","⚡"),w("deshalb","所以","👉")],
+                phrases: ["Ich mag Tee, aber keinen Kaffee.","Zuerst esse ich, dann gehe ich.","Es regnet, deshalb bleibe ich zu Hause.","Er ist müde, trotzdem arbeitet er."],
+                verb: null },
+            // 40 A1 Prüfung
+            { words: [w("Prüfung","考试","📝"),w("Frage","问题","❓"),w("Antwort","回答","💬"),w("Note","分数","📊"),
+                w("Ergebnis","结果","✅"),w("Aufgabe","任务","📋"),w("richtig","正确","✔️"),w("falsch","错误","❌"),
+                w("üben","练习","🔁"),w("bestehen","通过","🎓")],
+                phrases: ["Ich übe für die Prüfung.","Die Antwort ist richtig.","Ich habe die Prüfung bestanden.","Das war eine schwere Aufgabe."],
+                verb: null },
+            // 41 A2 Perfekt (完成时 - 分词)
+            { words: [w("gemacht","做了(过去分词)","🔨"),w("gespielt","玩了","⚽"),w("gelernt","学了","📚"),w("gegessen","吃了","🍽️"),
+                w("gegangen","去了","🚶"),w("gekommen","来了","🚗"),w("gesehen","看了","👀"),w("gelesen","读了","📖"),
+                w("gefahren","开车去了","🚆"),w("gesprochen","说了","🗣️")],
+                phrases: ["Ich habe Hausaufgaben gemacht.","Wir sind ins Kino gegangen.","Hast du das Buch gelesen?","Er ist nach Berlin gefahren."],
+                verb: null },
+            // 42 A2 Modalverben
+            { words: [w("können","能/会","💪"),w("müssen","必须","❗"),w("dürfen","可以(许可)","✅"),w("wollen","想要","🎯"),
+                w("sollen","应该","📋"),w("mögen","喜欢","❤️"),w("möchten","想要(礼貌)","🙏"),w("brauchen","需要","🔑"),
+                w("vielleicht","也许","🤔"),w("unbedingt","一定","💯")],
+                phrases: ["Ich kann Deutsch sprechen.","Du musst pünktlich sein.","Wir dürfen hier nicht rauchen.","Ich möchte einen Kaffee."],
+                verb: vb("können","kann","kannst","kann","können","könnt","können") },
+            // 43 A2 Nebensätze (从句连词)
+            { words: [w("weil","因为","➡️"),w("dass","(引导宾语从句)","💭"),w("wenn","如果/每当","❓"),w("obwohl","尽管","⚡"),
+                w("damit","以便","🎯"),w("bevor","在...之前","⏪"),w("nachdem","在...之后","⏩"),w("während","在...期间","⏳"),
+                w("sobald","一...就","⏰"),w("falls","万一","🎲")],
+                phrases: ["Ich bleibe zu Hause, weil ich krank bin.","Ich glaube, dass er recht hat.","Wenn es regnet, bleibe ich drinnen.","Obwohl es kalt ist, gehe ich raus."],
+                verb: null },
+            // 44 A2 Dativ/Akkusativ (介词)
+            { words: [w("mit","与...一起","🤝"),w("nach","朝/之后","➡️"),w("bei","在...那里","📍"),w("seit","自从","⏳"),
+                w("von","来自","🔙"),w("zu","去/朝向","🎯"),w("für","为了","🎁"),w("ohne","没有","🚫"),
+                w("durch","穿过","🌀"),w("gegen","反对/大约","⚔️")],
+                phrases: ["Ich fahre mit dem Bus.","Das Geschenk ist für dich.","Wir gehen durch den Park.","Er wohnt seit einem Jahr hier."],
+                verb: null },
+            // 45 A2 Adjektivdeklination
+            { words: [w("praktisch","实用的","🔧"),w("bequem","舒适的","🛋️"),w("wichtig","重要的","❗"),w("notwendig","必要的","✅"),
+                w("typisch","典型的","🏷️"),w("modern","现代的","✨"),w("klassisch","经典的","🎻"),w("einfach","简单的","👍"),
+                w("schwierig","困难的","😓"),w("interessant","有趣的","🤓")],
+                phrases: ["Das ist ein praktisches Auto.","Ich trage bequeme Schuhe.","Das ist eine wichtige Frage.","Deutsch ist manchmal schwierig."],
+                verb: null },
+            // 46 A2 Reflexiv (反身动词)
+            { words: [w("sich freuen","高兴","😊"),w("sich waschen","洗澡","🚿"),w("sich anziehen","穿衣","👕"),w("sich beeilen","赶快","⏱️"),
+                w("sich erinnern","记得","🧠"),w("sich interessieren","感兴趣","🤔"),w("sich ärgern","生气","😠"),w("sich entspannen","放松","😌"),
+                w("sich verabreden","约定见面","📅"),w("sich vorstellen","自我介绍","🙋")],
+                phrases: ["Ich freue mich auf die Ferien.","Er wäscht sich jeden Morgen.","Wir müssen uns beeilen.","Sie interessiert sich für Musik."],
+                verb: { verb: "sich freuen", forms: { "ich": "freue mich", "du": "freust dich", "er / sie / es": "freut sich",
+                    "wir": "freuen uns", "ihr": "freut euch", "sie / Sie": "freuen sich" } } },
+            // 47 A2 Temporal (时间状语)
+            { words: [w("früher","以前","⏮️"),w("später","以后","⏭️"),w("gleich","马上","⏱️"),w("neulich","最近","📅"),
+                w("demnächst","不久后","🔜"),w("inzwischen","与此同时","⏳"),w("mittlerweile","目前为止","🕰️"),w("vorhin","刚才","🕐"),
+                w("künftig","将来","🔮"),w("derzeit","目前","📍")],
+                phrases: ["Früher habe ich in Berlin gewohnt.","Ich komme gleich.","Er hat sich neulich verletzt.","Mittlerweile spreche ich gut Deutsch."],
+                verb: null },
+            // 48 A2 Komparativ (比较级/最高级)
+            { words: [w("größer","更大","⬆️"),w("kleiner","更小","⬇️"),w("schneller","更快","⚡"),w("langsamer","更慢","🐌"),
+                w("besser","更好","👍"),w("schlechter","更差","👎"),w("am größten","最大","🔝"),w("am schnellsten","最快","🚀"),
+                w("mehr","更多","➕"),w("weniger","更少","➖")],
+                phrases: ["Er ist größer als ich.","Das Auto ist schneller als das Fahrrad.","Sie spricht besser Deutsch als ich.","Das ist das beste Restaurant."],
+                verb: null },
+            // 49 A2 Genitiv (第二格)
+            { words: [w("des Vaters","父亲的","👨"),w("der Mutter","母亲的","👩"),w("meines Bruders","我兄弟的","👦"),w("ihres Freundes","她朋友的","🤝"),
+                w("wegen","由于","➡️"),w("trotz","尽管","⚡"),w("während","在...期间","⏳"),w("innerhalb","在...之内","📥"),
+                w("außerhalb","在...之外","📤"),w("statt","而不是","🔄")],
+                phrases: ["Das ist das Auto meines Vaters.","Wegen des Regens bleiben wir zu Hause.","Trotz der Kälte gehen wir spazieren.","Das Haus meiner Oma ist groß."],
+                verb: null },
+            // 50 A2 Finale (总复习)
+            { words: [w("Wortschatz","词汇量","📖"),w("Grammatik","语法","📐"),w("Fortschritt","进步","📈"),w("Ziel","目标","🎯"),
+                w("Erfolg","成功","🏆"),w("üben","练习","🔁"),w("wiederholen","复习","🔄"),w("zusammenfassen","总结","📝"),
+                w("verstehen","理解","💡"),w("beherrschen","掌握","🏅")],
+                phrases: ["Ich habe viel Fortschritt gemacht.","Wir wiederholen den Wortschatz.","Mein Ziel ist fließend Deutsch.","Du beherrschst die Grammatik gut!"],
+                verb: null },
+        ];
+
+        for (let i = 0; i < 45; i++) {
+            const id = i + 6;
+            const d = lessonData[i];
+            const dialogLines = [];
+            d.phrases.forEach((p, idx) => {
+                dialogLines.push(`${idx % 2 === 0 ? 'A' : 'B'}: ${p}`);
+            });
+            const dialogs = [{ sp: "Übung", en: "对话练习", lines: dialogLines }];
+            LESSONS.push(L(id, lessonTitles[i] || `Lektion ${id}`, lessonThemes[i] || "📚",
+                d.words,
+                d.phrases,
+                dialogs,
+                d.verb
+            ));
+        }
+
+        // ============================================================
+        //  ROLES
+        // ============================================================
+        const ROLES = [
+            { id: "bruno", emoji: "🐻", name: "Bruno", tag: "勇敢探险家", msg: "Bruno 说：Super! 我们一起闯关！" },
+            { id: "fuchs", emoji: "🦊", name: "Fuchs", tag: "聪明小狐狸", msg: "Fuchs 说：想一想，你会的！" },
+            { id: "pingu", emoji: "🐧", name: "Pingu", tag: "可爱小企鹅", msg: "Pingu 说：慢慢来，很棒！" },
+            { id: "minka", emoji: "🐱", name: "Minka", tag: "活泼小猫", msg: "Minka 说：喵！德语真好玩！" },
+            { id: "max", emoji: "🐶", name: "Max", tag: "运动小狗", msg: "Max 说：答对就升级！" },
+            { id: "elsa", emoji: "🦄", name: "Elsa", tag: "梦幻独角兽", msg: "Elsa 说：相信自己，你能行！" },
+            { id: "felix", emoji: "🐼", name: "Felix", tag: "温和熊猫", msg: "Felix 说：学习慢慢来，真棒！" },
+            { id: "luna", emoji: "🦉", name: "Luna", tag: "智慧猫头鹰", msg: "Luna 说：智慧来自每一次尝试！" },
+            { id: "leo", emoji: "🦁", name: "Leo", tag: "勇敢小狮子", msg: "Leo 说：像狮子一样自信地说德语！" },
+            { id: "milo", emoji: "🐵", name: "Milo", tag: "机灵小猴", msg: "Milo 说：越练越溜，加油！" },
+            { id: "nemo", emoji: "🐢", name: "Nemo", tag: "淡定小乌龟", msg: "Nemo 说：慢慢来，稳稳赢！" },
+            { id: "stella", emoji: "🐬", name: "Stella", tag: "开朗小海豚", msg: "Stella 说：一起快乐学德语！" }
+        ];
+
+        // ============================================================
+        //  STATE
+        // ============================================================
+        let user = null;
+        let activeLesson = LESSONS[0];
+        let gamePool = [];
+        let currentGame = null;
+        let answered = false;
+        let spellCurrent = null;
+        let gameScore = 0;
+        let spellScore = 0;
+        let verbScore = 0;
+        let gameCorrectCount = 0;
+        let gameTotalCount = 0;
+        let spellCorrectCount = 0;
+        let spellTotalCount = 0;
+        let verbCorrectCount = 0;
+        let verbTotalCount = 0;
+        let spellTotalWords = 0;
+        let spellLocked = false;
+        let verbLocked = false;
+
+        // ============================================================
+        //  CORE FUNCTIONS
+        // ============================================================
+        const FIRST_UNLOCKED_LESSON = 12;
+
+        function keyFor(name) { return "dqv7_" + name.toLowerCase(); }
+
+        function defaultProgress() {
+            return { xp: 0, completed: [], unlocked: FIRST_UNLOCKED_LESSON, lastLesson: 1, lessonScores: {} };
+        }
+
+        function roleIdOf(role) { return role?.id || role || "bruno"; }
+
+        function saveActiveRoleToProfiles() {
+            if (!user) return;
+            if (!user.roleProfiles) user.roleProfiles = {};
+            const rid = roleIdOf(user.role);
+            if (rid) {
+                user.roleProfiles[rid] = {
+                    xp: user.xp || 0,
+                    completed: Array.isArray(user.completed) ? [...user.completed] : [],
+                    unlocked: Math.max(FIRST_UNLOCKED_LESSON, user.unlocked || 1),
+                    lastLesson: user.lastLesson || 1,
+                    lessonScores: user.lessonScores || {}
+                };
+            }
+        }
+
+        function loadRoleProfile(rid) {
+            if (!user) return;
+            if (!user.roleProfiles) user.roleProfiles = {};
+            const existing = user.roleProfiles[rid];
+            const fallback = {
+                xp: user.xp || 0,
+                completed: Array.isArray(user.completed) ? user.completed.filter(x => typeof x === "string") : [],
+                unlocked: Math.max(FIRST_UNLOCKED_LESSON, user.unlocked || 1),
+                lastLesson: user.lastLesson || 1,
+                lessonScores: user.lessonScores || {}
+            };
+            const p = existing || fallback;
+            user.xp = p.xp || 0;
+            user.completed = Array.isArray(p.completed) ? p.completed : [];
+            user.unlocked = Math.max(FIRST_UNLOCKED_LESSON, p.unlocked || 1);
+            user.lastLesson = p.lastLesson || 1;
+            user.lessonScores = p.lessonScores || {};
+            user.roleId = rid;
+            user.role = ROLES.find(r => r.id === rid) || user.role || ROLES[0];
+        }
+
+        function isTextPic(pic) { return /[\u4e00-\u9fa5]/.test(pic); }
+        function picFontSize(pic) { return isTextPic(pic) ? '28px' : '48px'; }
+
+        function norm(s) { return s.trim().toLowerCase().replaceAll("ß", "ss"); }
+
+        function shuffle(arr) {
+            for (let i = arr.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [arr[i], arr[j]] = [arr[j], arr[i]];
+            }
+            return arr;
+        }
+
+        function strictMatch(input, correct) {
+            return input === correct;
+        }
+
+        function speak(text, lang = 'de-DE') {
+            if (!text) return;
+            if ("speechSynthesis" in window) {
+                speechSynthesis.cancel();
+                const u = new SpeechSynthesisUtterance(text);
+                u.lang = lang;
+                u.rate = 0.78;
+                const voices = speechSynthesis.getVoices();
+                const de = voices.find(v => v.lang.startsWith('de'));
+                if (de) u.voice = de;
+                speechSynthesis.speak(u);
+            }
+        }
+
+        function show(id) {
+            document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+            document.getElementById(id)?.classList.add('active');
+            updateStatus();
+            if (id === 'lessons') renderLessonGrid();
+            if (id === 'home') renderHome();
+            if (id === 'library') renderLibrary();
+        }
+
+        function save() {
+            if (user) {
+                try {
+                    user.unlocked = Math.max(FIRST_UNLOCKED_LESSON, user.unlocked || 1);
+                    saveActiveRoleToProfiles();
+                    localStorage.setItem(keyFor(user.name), JSON.stringify(user));
+                } catch (e) {
+                    console.warn('保存失败:', e);
+                }
+            }
+            updateStatus();
+        }
+
+        function getSavedAccounts() {
+            return Object.keys(localStorage)
+                .filter(k => k.startsWith('dqv7_'))
+                .map(k => { try { return JSON.parse(localStorage.getItem(k)); } catch { return null; } })
+                .filter(x => x && x.name)
+                .sort((a,b) => a.name.localeCompare(b.name));
+        }
+
+        function renderSavedAccounts() {
+            const select = document.getElementById('loginAccount');
+            if (!select) return;
+            const accounts = getSavedAccounts();
+            select.innerHTML = '<option value="">👤 选择已保存账号（可不选）</option>' +
+                accounts.map(a => `<option value="${a.name.replaceAll('&','&amp;').replaceAll('"','&quot;')}">${a.name}</option>`).join('');
+        }
+
+        function selectSavedAccount() {
+            const select = document.getElementById('loginAccount');
+            const nameInput = document.getElementById('loginName');
+            const passInput = document.getElementById('loginPass');
+            if (!select || !select.value) return;
+            nameInput.value = select.value;
+            // 自动填入密码，方便孩子一键登录（本机浏览器历史记录）
+            try {
+                const saved = JSON.parse(localStorage.getItem(keyFor(select.value)) || 'null');
+                if (saved && saved.pass && passInput) passInput.value = saved.pass;
+            } catch (e) { console.warn('自动填充密码失败:', e); }
+        }
+
+        // ============================================================
+        //  LOGIN / LOGOUT (完全修复版)
+        // ============================================================
+        function login() {
+            const nameInput = document.getElementById('loginName');
+            const passInput = document.getElementById('loginPass');
+            const name = nameInput.value.trim();
+            const pass = passInput.value.trim();
+            if (!name) { alert('⚠️ 请输入用户名！'); return; }
+            if (!pass) { alert('⚠️ 请输入密码！'); return; }
+
+            const key = keyFor(name);
+            let savedData = null;
+            try { savedData = localStorage.getItem(key); } catch (e) { console.warn('读取localStorage失败:', e); }
+
+            user = null;
+            if (savedData) {
+                try {
+                    user = JSON.parse(savedData);
+                    if (user.pass !== pass) { alert('❌ 密码错误，请重试！'); user = null; return; }
+                    if (!user.roleProfiles) user.roleProfiles = {};
+                    user.unlocked = Math.max(FIRST_UNLOCKED_LESSON, user.unlocked || 1);
+                    user.completed = Array.isArray(user.completed) ? user.completed.filter(x => typeof x === "string") : [];
+                    user.xp = user.xp || 0;
+                    user.lastLesson = user.lastLesson || 1;
+                    if (user.roleId || user.role) loadRoleProfile(roleIdOf(user.roleId || user.role));
+                    save();
+                } catch (e) {
+                    alert('⚠️ 数据损坏，请重新注册');
+                    localStorage.removeItem(key);
+                    user = null;
+                }
+            }
+            if (!user) {
+                user = {
+                    name, pass, role: null, roleId: null, roleProfiles: {},
+                    xp: 0, completed: [], unlocked: FIRST_UNLOCKED_LESSON,
+                    lastLesson: 1, lessonScores: {}
+                };
+                save();
+                alert('🎉 账号 "' + name + '" 创建成功！');
+            }
+            renderSavedAccounts();
+            if (!user.role) { renderRoles(); show('roles'); }
+            else { renderHome(); show('home'); }
+            updateStatus();
+        }
+
+        function logout() {
+            save();
+            user = null;
+            show('login');
+            document.getElementById('topStatus').textContent = '未登录';
+            document.getElementById('loginName').value = '';
+            document.getElementById('loginPass').value = '';
+            if (document.getElementById('loginAccount')) document.getElementById('loginAccount').value = '';
+            renderSavedAccounts();
+        }
+
+        // ============================================================
+        //  ROLES
+        // ============================================================
+        function renderRoles() {
+            const grid = document.getElementById('roleGrid');
+            grid.innerHTML = '';
+            ROLES.forEach(r => {
+                const d = document.createElement('div');
+                d.className = 'card';
+                d.innerHTML =
+                    `<div class="emoji">${r.emoji}</div><div class="title">${r.name}</div><div class="sub">${r.tag}</div>`;
+                d.onclick = () => {
+                    if (user.roleId) saveActiveRoleToProfiles();
+                    user.role = r;
+                    loadRoleProfile(r.id);
+                    save();
+                    renderHome();
+                    show('home');
+                };
+                grid.appendChild(d);
+            });
+        }
+
+        // ============================================================
+        //  HOME
+        // ============================================================
+        function renderHome() {
+            if (!user) return;
+            const r = user.role || ROLES[0];
+            document.getElementById('avatar').textContent = r.emoji;
+            document.getElementById('welcome').textContent = `Hallo, ${user.name}!`;
+            document.getElementById('partnerText').textContent = r.msg;
+            updateStatus();
+
+            const lid = user.lastLesson || 1;
+            const cur = LESSONS.find(l => l.id === lid) || LESSONS[0];
+            const container = document.getElementById('todayTasks');
+            let html =
+                `<div style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;"><span style="font-weight:700;font-size:18px;color:#0a2a5e;">📖 Lektion ${cur.id}: ${cur.title}</span><span class="badge-gold">${Math.min(user.unlocked||1, LESSONS.length)}/${LESSONS.length}</span></div>`;
+            const tasks = ['words', 'game', 'spell', 'verb'];
+            const done = user.completed || [];
+            html += `<div style="display:flex;flex-wrap:wrap;gap:8px;margin:10px 0;">`;
+            tasks.forEach(t => {
+                const isDone = done.includes(`${cur.id}-${t}`);
+                const label = { words: '单词卡', game: '看图选词', spell: '拼写', verb: '变位' } [t];
+                html +=
+                    `<span style="background:${isDone?'#d4edda':'#e8effa'};padding:4px 14px;border-radius:40px;font-size:14px;color:#0a2a5e;">${isDone?'✅':'⬜'} ${label}</span>`;
+            });
+            html += `</div>`;
+            const pct = getLessonProgress(cur.id);
+            html +=
+                `<div style="background:#d0e0f5;border-radius:40px;height:8px;overflow:hidden;margin:8px 0;"><div style="height:100%;width:${pct}%;background:linear-gradient(90deg,#ffd84d,#ff9f1c);"></div></div>`;
+            html +=
+                `<div style="display:flex;justify-content:space-between;font-size:13px;color:#3d5f8a;"><span>进度 ${Math.round(pct)}%</span><span>${pct>=100?'✅ 可解锁':'⏳ 需100%'}</span></div>`;
+            if (pct >= 100 && cur.id < LESSONS.length && user.unlocked >= cur.id + 1) {
+                html += `<p style="margin-top:10px;color:#1f7a3a;font-weight:700;">🔓 已完成，本课之后的课程已自动解锁。</p>`;
+            } else if (cur.id >= LESSONS.length && pct >= 100) {
+                html += `<p style="color:#f5a623;font-weight:700;">🏆 所有课程完成！</p>`;
+            }
+            container.innerHTML = html;
+            document.getElementById('unlockedCount').textContent = Math.min(user.unlocked || 1, LESSONS.length);
+        }
+
+        // 任务顺序：单词卡 → 抄写练习 → 看图选词 → 拼写 → 变位(可选)
+        const STAGE_ORDER = ['words', 'write', 'game', 'spell', 'verb'];
+        const STAGE_LABEL = { words: '📚 单词卡', write: '✍️ 抄写练习', game: '🖼️ 看图选词', spell: '⌨️ 拼写', verb: '🔤 变位' };
+        // 每个阶段的"前置条件"：必须先完成前一阶段才能进入
+        const STAGE_REQUIRES = { write: 'words', game: 'write', spell: 'game', verb: 'spell' };
+
+        function getLessonProgress(lid) {
+            if (!user) return 0;
+            const done = user.completed || [];
+            const hasVerb = LESSONS.find(l => l.id === lid)?.verbData !== null;
+            const tasks = hasVerb ? STAGE_ORDER : STAGE_ORDER.filter(t => t !== 'verb');
+            const total = tasks.length;
+            let cnt = 0;
+            tasks.forEach(t => { if (done.includes(`${lid}-${t}`)) cnt++; });
+            return Math.round((cnt / total) * 100);
+        }
+
+        function maybeAutoUnlock() {
+            if (!user) return false;
+            let changed = false;
+            while (user.unlocked < LESSONS.length && getLessonProgress(user.unlocked) >= 100) {
+                user.unlocked++;
+                changed = true;
+            }
+            if (changed) {
+                user.lastLesson = Math.min(Math.max(user.lastLesson || 1, user.unlocked), LESSONS.length);
+                save();
+            }
+            return changed;
+        }
+
+        function unlockNext() {
+            if (!user) return;
+            const changed = maybeAutoUnlock();
+            renderHome();
+            show('lessons');
+            if (!changed) alert('⏳ 请先完成当前课程的全部任务，系统会自动解锁下一课。');
+        }
+
+        // ============================================================
+        //  LESSON GRID
+        // ============================================================
+        function renderLessonGrid() {
+            const grid = document.getElementById('lessonGrid');
+            grid.innerHTML = '';
+            const unlocked = user?.unlocked || 1;
+            LESSONS.forEach(l => {
+                const d = document.createElement('div');
+                d.className = 'card';
+                const isUnlocked = l.id <= unlocked;
+                const done = user?.completed || [];
+                const allDone = ['words', 'write', 'game', 'spell'].every(t => done.includes(`${l.id}-${t}`));
+                const hasVerb = l.verbData !== null;
+                const verbDone = hasVerb ? done.includes(`${l.id}-verb`) : true;
+                const fullyDone = allDone && verbDone;
+                let icon = isUnlocked ? (fullyDone ? '✅' : '⭐') : '🔒';
+                d.innerHTML =
+                    `<div style="font-size:28px;">${l.theme}</div><div class="title">Lektion ${l.id} ${icon}</div><div class="sub">${l.title}</div>`;
+                if (isUnlocked) d.onclick = () => openLesson(l.id);
+                else { d.style.opacity = '0.55';
+                    d.style.cursor = 'not-allowed'; }
+                grid.appendChild(d);
+            });
+        }
+
+        // ============================================================
+        //  LESSON DETAIL
+        // ============================================================
+        function openLesson(id) {
+            activeLesson = LESSONS.find(l => l.id === id) || LESSONS[0];
+            user.lastLesson = id;
+            save();
+            document.getElementById('lessonTitle').textContent = `Lektion ${activeLesson.id}: ${activeLesson.title}`;
+            document.getElementById('lessonSub').textContent =
+                `${activeLesson.theme} · ${activeLesson.words.length} Wörter · ${activeLesson.phrases.length} Sätze`;
+            document.getElementById('lessonSub').style.color = '#3d5f8a';
+            const pct = getLessonProgress(id);
+            document.getElementById('lessonProgress').textContent = `📊 ${Math.round(pct)}%  ${pct>=100?'✅ 可解锁':'⏳ 需100%正确才能解锁下一课'}`;
+            const note = document.getElementById('stageLockNote');
+            if (note) note.textContent = '';
+            window._writeState = null;
+            renderTaskStatus();
+            renderWords();
+            show('lessonDetail');
+            document.getElementById('verbTabBtn').style.display = activeLesson.verbData ? 'inline-block' : 'none';
+            gameScore = 0;
+            spellScore = 0;
+            verbScore = 0;
+            gameCorrectCount = 0;
+            gameTotalCount = 0;
+            spellCorrectCount = 0;
+            spellTotalCount = 0;
+            document.getElementById('gameScore').textContent = '0';
+            document.getElementById('spellScore').textContent = '0';
+            document.getElementById('verbScore').textContent = '0';
+            updateTabLocks();
+        }
+
+        function renderTaskStatus() {
+            const container = document.getElementById('taskStatus');
+            const done = user?.completed || [];
+            const tasks = activeLesson.verbData ? STAGE_ORDER : STAGE_ORDER.filter(t => t !== 'verb');
+            let html =
+                '<div style="display:flex;flex-wrap:wrap;gap:10px;background:#e8effa;padding:12px;border-radius:16px;color:#0a2a5e;">';
+            tasks.forEach(t => {
+                const isDone = done.includes(`${activeLesson.id}-${t}`);
+                html +=
+                    `<span style="background:${isDone?'#d4edda':'#f0f6ff'};padding:4px 16px;border-radius:40px;color:#0a2a5e;">${isDone?'✅':'⬜'} ${STAGE_LABEL[t]}</span>`;
+            });
+            html += '</div>';
+            container.innerHTML = html;
+        }
+
+        // 依次解锁：写完上一环节，下一环节的入口按钮才会亮起
+        function updateTabLocks() {
+            if (!activeLesson) return;
+            const done = user?.completed || [];
+            const has = t => done.includes(`${activeLesson.id}-${t}`);
+            const setLock = (elId, locked) => {
+                const el = document.getElementById(elId);
+                if (!el) return;
+                el.classList.toggle('tab-btn-locked', locked);
+            };
+            setLock('tabWrite', !has('words'));
+            setLock('tabGame', !has('write'));
+            setLock('tabSpell', !has('game'));
+            setLock('verbTabBtn', !activeLesson.verbData || !has('spell'));
+        }
+
+        function tryOpenStage(stage) {
+            const note = document.getElementById('stageLockNote');
+            if (stage === 'verb' && !activeLesson.verbData) {
+                if (note) { note.style.color = '#3d5f8a';
+                    note.textContent = '本课没有动词变位练习哦～'; }
+                return;
+            }
+            const req = STAGE_REQUIRES[stage];
+            const done = user?.completed || [];
+            if (req && !done.includes(`${activeLesson.id}-${req}`)) {
+                if (note) {
+                    note.style.color = '#c62828';
+                    note.textContent = `🔒 请先100%完成「${STAGE_LABEL[req]}」，才能进入「${STAGE_LABEL[stage]}」！`;
+                }
+                return;
+            }
+            if (note) note.textContent = '';
+            if (stage === 'write') renderWriteWords();
+            if (stage === 'game') startLessonGame();
+            if (stage === 'spell') startSpelling();
+            if (stage === 'verb') renderVerbExercise();
+        }
+
+        function backToLesson() { openLesson(activeLesson.id); }
+
+        // ============================================================
+        //  WORDS
+        // ============================================================
+        function renderWords() {
+            const box = document.getElementById('lessonContent');
+            box.innerHTML =
+                `<div class="grid">${activeLesson.words.map(w=>`<div class="card" onclick="speak('${w[0]}','de-DE')"><div style="font-size:${picFontSize(w[2])};font-weight:${isTextPic(w[2])?'800':'400'};">${w[2]}</div><div class="title">${w[0]}</div><div class="sub">${w[1]}</div></div>`).join('')}</div>`;
+            markTask('words');
+        }
+
+        function renderPhrases() {
+            const box = document.getElementById('lessonContent');
+            box.innerHTML = activeLesson.phrases.map(p =>
+                `<div class="card" onclick="speak('${p}','de-DE')" style="text-align:left;font-size:18px;font-weight:600;">🔊 ${p}</div>`
+                ).join('');
+        }
+
+        function renderDialog() {
+            const box = document.getElementById('lessonContent');
+            if (!activeLesson.dialogs || !activeLesson.dialogs.length) { box.innerHTML = '<p class="muted">无对话</p>'; return; }
+            box.innerHTML = activeLesson.dialogs.map(dlg =>
+                    `<div class="convo-scene"><div style="font-weight:700;color:#0a2a5e;">🗣️ ${dlg.sp} (${dlg.en})</div>${dlg.lines.map(l=>`<div>${l}</div>`).join('')}</div>`
+                    ).join('');
+        }
+
+        // ============================================================
+        //  WRITE PRACTICE (抄写练习)：单词照抄一遍 · 句子听一遍再抄一遍
+        //  全部抄写正确后才解锁"看图选词"
+        // ============================================================
+        function escJs(s) { return String(s).replace(/\\/g, '\\\\').replace(/'/g, "\\'"); }
+
+        function renderWriteWords() {
+            const box = document.getElementById('lessonContent');
+            window._writeState = {
+                words: activeLesson.words.map(w => ({ target: w[0], zh: w[1], pic: w[2], done: false })),
+                phrases: activeLesson.phrases.map(p => ({ target: p, done: false }))
+            };
+            box.innerHTML =
+                `<div style="background:#fff8e1;border:2px solid #ffd84d;border-radius:16px;padding:14px;margin-bottom:14px;color:#0a2a5e;">
+            <b>✍️ 抄写练习：</b>先看/听一遍，再照着<b>完整、准确</b>地抄写一遍（大小写、变音符号都要对），全部完成后才能进入"看图选词"。
+        </div>
+        <div class="progress-label" id="writeProgressLabel" style="color:#3d5f8a;">进度 0 / 0</div>
+        <div class="progress-bar-outer"><div id="writeProgressBar" class="progress-bar-inner"></div></div>
+        <div id="writeList"></div>`;
+            renderWriteList();
+        }
+
+        function renderWriteList() {
+            const st = window._writeState;
+            if (!st) return;
+            let html = '<h3 style="color:#0a2a5e;margin:10px 0;">📚 单词抄写</h3>';
+            st.words.forEach((it, i) => {
+                html += `<div class="write-item ${it.done?'done':''}" id="witem-w${i}">
+                <div class="wsrc">${it.pic} <b>${it.target}</b> <span style="font-weight:400;color:#3d5f8a;font-size:15px;">（${it.zh}）</span></div>
+                ${it.done
+                    ? `<div style="color:#1f7a3a;font-weight:700;">✅ 已完成</div>`
+                    : `<input placeholder="照着完整抄写: ${it.target}" data-idx="${i}" data-type="w" onkeydown="if(event.key==='Enter')checkWriteItem(this)">
+                       <div class="flex" style="margin-top:6px;">
+                         <button type="button" onclick="checkWriteItem(this.parentElement.previousElementSibling)">✅ 检查</button>
+                         <button type="button" class="secondary" onclick="speak('${escJs(it.target)}','de-DE')">🔊 再听一遍</button>
+                       </div>
+                       <div class="small" style="color:#c62828;margin-top:4px;" id="wmsg-w${i}"></div>`
+                }
+            </div>`;
+            });
+            html += '<h3 style="color:#0a2a5e;margin:14px 0 10px;">💬 句子听写抄写（先听一遍，再抄写一遍）</h3>';
+            st.phrases.forEach((it, i) => {
+                html += `<div class="write-item ${it.done?'done':''}" id="witem-p${i}">
+                <div class="wsrc phrase">🔊 <b>${it.done ? it.target : '点击按钮听一遍这句话'}</b></div>
+                ${it.done
+                    ? `<div style="color:#1f7a3a;font-weight:700;">✅ 已完成</div>`
+                    : `<div class="flex" style="margin-bottom:6px;"><button type="button" class="secondary" onclick="speak('${escJs(it.target)}','de-DE')">🔊 听一遍</button></div>
+                       <input placeholder="听一遍后完整抄写这句话" data-idx="${i}" data-type="p" onkeydown="if(event.key==='Enter')checkWriteItem(this)">
+                       <div class="flex" style="margin-top:6px;">
+                         <button type="button" onclick="checkWriteItem(this.parentElement.previousElementSibling)">✅ 检查</button>
+                       </div>
+                       <div class="small" style="color:#c62828;margin-top:4px;" id="wmsg-p${i}"></div>`
+                }
+            </div>`;
+            });
+            document.getElementById('writeList').innerHTML = html;
+            updateWriteProgress();
+        }
+
+        function checkWriteItem(inputEl) {
+            if (!inputEl || !inputEl.dataset) return;
+            const idx = parseInt(inputEl.dataset.idx, 10);
+            const type = inputEl.dataset.type;
+            const st = window._writeState;
+            if (!st) return;
+            const it = type === 'w' ? st.words[idx] : st.phrases[idx];
+            if (it.done) return; // 已完成，防止重复计分
+            const val = inputEl.value;
+            if (val.trim() === '') return;
+            const correct = val.trim() === it.target.trim();
+            const msg = document.getElementById(`wmsg-${type}${idx}`);
+            if (correct) {
+                it.done = true;
+                if (user) { user.xp = (user.xp || 0) + 1;
+                    save();
+                    updateStatus(); }
+                speak('Richtig!', 'de-DE');
+                renderWriteList();
+            } else {
+                if (msg) msg.textContent = `❌ 抄写不完全一致，请再检查一次大小写/字母/标点后重试`;
+                speak(it.target, 'de-DE');
+            }
+        }
+
+        function updateWriteProgress() {
+            const st = window._writeState;
+            if (!st) return;
+            const total = st.words.length + st.phrases.length;
+            const done = st.words.filter(w => w.done).length + st.phrases.filter(p => p.done).length;
+            const label = document.getElementById('writeProgressLabel');
+            const bar = document.getElementById('writeProgressBar');
+            if (label) label.textContent = `进度 ${done} / ${total}`;
+            if (bar) bar.style.width = `${total ? Math.round(done/total*100) : 0}%`;
+            if (total > 0 && done === total) {
+                markTask('write');
+                const note = document.getElementById('stageLockNote');
+                if (note) { note.style.color = '#1f7a3a';
+                    note.textContent = '✅ 抄写练习全部完成！现在可以进入"看图选词"了。'; }
+            }
+        }
+
+        // ============================================================
+        //  MARK TASK
+        // ============================================================
+        function markTask(taskId) {
+            if (!user) return;
+            const key = `${activeLesson.id}-${taskId}`;
+            if (!user.completed) user.completed = [];
+            if (!user.completed.includes(key)) {
+                user.completed.push(key);
+                user.xp = (user.xp || 0) + 10;
+                save();
+                const pct = getLessonProgress(activeLesson.id);
+                maybeAutoUnlock();
+                renderTaskStatus();
+                document.getElementById('lessonProgress').textContent = `📊 ${Math.round(pct)}%  ${pct>=100?'✅ 可解锁':'⏳ 需100%正确才能解锁下一课'}`;
+                updateStatus();
+                renderHome();
+                updateTabLocks();
+            }
+        }
+
+        // ============================================================
+        //  GAME (看图选词)
+        // ============================================================
+        // gameMode: 'lesson' = 本课看图选词(完成后标记任务) · 'mixed' = 混合复习(不计入课程任务)
+        let gameMode = 'lesson';
+        let gameTotalWords = 0;
+
+        function startLessonGame() {
+            gameMode = 'lesson';
+            gamePool = shuffle(activeLesson.words.map(w => ({ de: w[0], zh: w[1], pic: w[2] })));
+            gameTotalWords = gamePool.length;
+            gameCorrectCount = 0;
+            gameTotalCount = 0;
+            gameScore = 0;
+            document.getElementById('gameScore').textContent = '0';
+            document.getElementById('gameTitle').textContent = `🖼️ Lektion ${activeLesson.id} 看图选词`;
+            document.getElementById('gameHint').textContent = `共 ${gamePool.length} 题 · 答对才能进入下一词 · +10 / −5`;
+            document.getElementById('gameHint').style.color = '#3d5f8a';
+            nextQuestion();
+            show('game');
+        }
+
+        function startMixedGame() {
+            gameMode = 'mixed';
+            const max = user?.unlocked || 1;
+            gamePool = shuffle(LESSONS.filter(l => l.id <= max).flatMap(l => l.words.map(w => ({ de: w[0], zh: w[1], pic: w[2] }))));
+            if (!gamePool.length) { alert('先解锁一些课程吧！'); return; }
+            gameTotalWords = gamePool.length;
+            gameCorrectCount = 0;
+            gameTotalCount = 0;
+            gameScore = 0;
+            document.getElementById('gameScore').textContent = '0';
+            document.getElementById('gameTitle').textContent = '🏆 混合闯关';
+            document.getElementById('gameHint').textContent = `共 ${gamePool.length} 词 · +10 / −5`;
+            document.getElementById('gameHint').style.color = '#3d5f8a';
+            nextQuestion();
+            show('game');
+        }
+
+        function updateGameProgress() {
+            const total = gameTotalWords || 0;
+            const done = Math.max(0, total - gamePool.length);
+            const label = document.getElementById('gameProgressLabel');
+            const bar = document.getElementById('gameProgressBar');
+            if (label) label.textContent = `进度 ${done} / ${total}`;
+            if (bar) bar.style.width = `${total ? Math.round(done/total*100) : 0}%`;
+        }
+
+        function nextQuestion() {
+            answered = false;
+            document.getElementById('gameResult').textContent = '';
+            document.getElementById('gameResult').className = 'result';
+            document.getElementById('nextBtn').style.display = 'none';
+            updateGameProgress();
+            if (!gamePool.length) {
+                document.getElementById('question').textContent = '🎉 完成！';
+                document.getElementById('choices').innerHTML = '';
+                if (gameMode === 'lesson') markTask('game');
+                return;
+            }
+            currentGame = gamePool[0]; // 只是"看"一下，答对才会移出题库
+            document.getElementById('question').textContent = currentGame.de;
+            speak(currentGame.de, 'de-DE');
+
+            let opts = [currentGame];
+            const usedPics = new Set([currentGame.pic]);
+            const all = LESSONS.flatMap(l => l.words.map(w => ({ de: w[0], zh: w[1], pic: w[2] })));
+            let attempts = 0;
+            while (opts.length < 4 && attempts < 100) {
+                attempts++;
+                const w = all[Math.floor(Math.random() * all.length)];
+                if (!usedPics.has(w.pic) && !opts.find(o => o.de === w.de)) {
+                    opts.push(w);
+                    usedPics.add(w.pic);
+                }
+            }
+            const backupPics = ['⭐', '🌟', '💫', '✨', '🌈', '🔥', '💎', '🎯'];
+            let backupIdx = 0;
+            while (opts.length < 4) {
+                const fake = { de: `fake${backupIdx}`, zh: `备用${backupIdx}`, pic: backupPics[backupIdx % backupPics.length] };
+                if (!usedPics.has(fake.pic)) {
+                    opts.push(fake);
+                    usedPics.add(fake.pic);
+                }
+                backupIdx++;
+            }
+            opts.sort(() => Math.random() - 0.5);
+            const c = document.getElementById('choices');
+            c.innerHTML = opts.map(w => `<div class="choice-btn" data-de="${w.de}" style="font-size:${picFontSize(w.pic)};font-weight:${isTextPic(w.pic)?'800':'400'};">${w.pic}</div>`).join('');
+            c.querySelectorAll('.choice-btn').forEach(el => {
+                el.onclick = () => checkGameAnswer(el.dataset.de);
+            });
+        }
+
+        // 答对才能移出题库进入下一题；答错原地重试，不会重复计分/重复累计XP
+        function checkGameAnswer(de) {
+            if (answered) return; // 防止答对后重复点击无限加分
+            const res = document.getElementById('gameResult');
+            const correct = de === currentGame.de;
+            if (correct) {
+                answered = true;
+                gameTotalCount++;
+                gameCorrectCount++;
+                gameScore += 10;
+                if (user) { user.xp = (user.xp || 0) + 10; save(); }
+                res.textContent = `⭐ Super! +10 XP (${currentGame.zh})`;
+                res.className = 'result ok';
+                speak('Super!', 'de-DE');
+                gamePool.shift(); // 本词已掌握，移出题库
+                document.querySelectorAll('.choice-btn').forEach(el => {
+                    if (el.dataset.de === de) el.classList.add('selected-correct');
+                });
+                document.getElementById('nextBtn').style.display = 'inline-block';
+            } else {
+                gameScore = Math.max(0, gameScore - 5);
+                res.textContent = `❌ 再试一次！这不是 ${currentGame.de} (${currentGame.zh})`;
+                res.className = 'result bad';
+                speak('Versuch es noch einmal.', 'de-DE');
+                document.querySelectorAll('.choice-btn').forEach(el => {
+                    if (el.dataset.de === de) el.classList.add('selected-wrong');
+                });
+                // answered 保持 false，允许重新点击其他选项，直到选对为止
+            }
+            document.getElementById('gameScore').textContent = gameScore;
+            updateStatus();
+            updateGameProgress();
+        }
+
+        // ============================================================
+        //  SPELLING · 严格匹配 · 空格算错 · 答对才能进入下一词 · +15 / −5
+        // ============================================================
+        function startSpelling() {
+            gamePool = shuffle(activeLesson.words.map(w => ({ de: w[0], zh: w[1], pic: w[2] })));
+            spellTotalWords = gamePool.length;
+            spellCorrectCount = 0;
+            spellTotalCount = 0;
+            spellScore = 0;
+            spellLocked = false;
+            document.getElementById('spellScore').textContent = '0';
+            nextSpell();
+            show('spell');
+        }
+
+        function updateSpellProgress() {
+            const total = spellTotalWords || 0;
+            const done = Math.max(0, total - gamePool.length);
+            const label = document.getElementById('spellProgressLabel');
+            const bar = document.getElementById('spellProgressBar');
+            if (label) label.textContent = `进度 ${done} / ${total}`;
+            if (bar) bar.style.width = `${total ? Math.round(done/total*100) : 0}%`;
+        }
+
+        function nextSpell() {
+            spellLocked = false;
+            updateSpellProgress();
+            if (!gamePool.length) {
+                document.getElementById('spellPic').textContent = '🎉';
+                document.getElementById('spellZh').textContent = '全部完成！';
+                document.getElementById('spellInput').disabled = true;
+                document.getElementById('spellCheckBtn').style.display = 'none';
+                document.getElementById('spellNext').style.display = 'none';
+                markTask('spell');
+                return;
+            }
+            document.getElementById('spellCheckBtn').style.display = 'inline-block';
+            spellCurrent = gamePool[0]; // 只是"看"一下，拼对才会移出题库
+            document.getElementById('spellPic').textContent = spellCurrent.pic;
+            document.getElementById('spellZh').textContent = spellCurrent.zh;
+            document.getElementById('spellInput').value = '';
+            document.getElementById('spellInput').disabled = false;
+            document.getElementById('spellResult').textContent = '';
+            document.getElementById('spellResult').className = 'result';
+            document.getElementById('spellNext').style.display = 'none';
+            document.getElementById('spellInput').focus();
+            speak(spellCurrent.de, 'de-DE');
+        }
+
+        // 拼对才能移出题库进入下一词；拼错必须重新输入正确答案才能继续，不会重复计分/重复加XP
+        function checkSpell() {
+            if (spellLocked) return; // 已拼对，防止重复点击"检查"无限加分
+            const inputEl = document.getElementById('spellInput');
+            const ans = inputEl.value;
+            const res = document.getElementById('spellResult');
+            if (ans === '') { res.textContent = '✏️ 请输入答案';
+                res.className = 'result bad'; return; }
+            const correct = ans === spellCurrent.de;
+            if (correct) {
+                spellLocked = true;
+                spellTotalCount++;
+                spellCorrectCount++;
+                spellScore += 15;
+                if (user) { user.xp = (user.xp || 0) + 15; save(); }
+                res.textContent = `✅ Richtig! +15 XP (${spellCurrent.zh})`;
+                res.className = 'result ok';
+                speak('Richtig!', 'de-DE');
+                gamePool.shift(); // 本词拼写正确，移出题库
+                document.getElementById('spellNext').style.display = 'inline-block';
+                document.getElementById('spellInput').disabled = true;
+                document.getElementById('spellCheckBtn').style.display = 'none';
+            } else {
+                spellScore = Math.max(0, spellScore - 5);
+                res.textContent = `❌ 不对，再试一次！(空格/大小写都算错) 提示：${spellCurrent.zh}`;
+                res.className = 'result bad';
+                speak(spellCurrent.de, 'de-DE');
+                // spellLocked 保持 false，必须重新输入正确答案才能进入下一词
+            }
+            document.getElementById('spellScore').textContent = spellScore;
+            updateStatus();
+            updateSpellProgress();
+        }
+
+        // ============================================================
+        //  VERB EXERCISE · 不区分大小写 · 全部正确才通过 · +80 / −5
+        // ============================================================
+        function renderVerbExercise() {
+            if (!activeLesson.verbData) {
+                document.getElementById('lessonContent').innerHTML = '<p class="muted">本课无变位练习</p>';
+                return;
+            }
+            const vd = activeLesson.verbData;
+            const pronouns = Object.keys(vd.forms);
+            verbCorrectCount = 0;
+            verbTotalCount = pronouns.length;
+            verbScore = 0;
+            verbLocked = false;
+            document.getElementById('verbScore').textContent = '0';
+            let html =
+                `<div style="background:#f0f6ff;border-radius:18px;padding:18px;border:2px solid #ffd84d;color:#0a2a5e;"><h3 style="color:#0a2a5e;">🔤 动词: <b>${vd.verb}</b></h3><p style="color:#3d5f8a;">不区分大小写 · 全部6行都正确才能过关 · +80 / −5</p><div class="verb-grid">`;
+            pronouns.forEach(pr => {
+                html += `<div class="verb-item" data-pr="${pr}" data-correct="${vd.forms[pr]}">
+                <div class="pronoun">${pr}</div>
+                <input class="form-input" placeholder="" data-pr="${pr}" oninput="checkVerbInput(this)" />
+                <div style="font-size:13px;color:#3d5f8a;margin-top:4px;" class="verb-feedback"></div>
+            </div>`;
+            });
+            html += `</div><div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:12px;">
+            <button id="verbCheckAllBtn" onclick="checkAllVerbForms()">✅ 检查所有</button>
+            <button id="verbResetBtn" onclick="resetVerbForms()" class="secondary">🔄 重新填写</button>
+        </div>
+            <div id="verbBatchResult" style="margin-top:10px;font-weight:700;color:#0a2a5e;"></div></div>`;
+            document.getElementById('lessonContent').innerHTML = html;
+            window._verbData = vd;
+            updateVerbProgress(0);
+        }
+
+        function updateVerbProgress(correctCount) {
+            const total = verbTotalCount || 0;
+            const label = document.getElementById('verbProgressLabel');
+            const bar = document.getElementById('verbProgressBar');
+            if (label) label.textContent = `进度 ${correctCount} / ${total}`;
+            if (bar) bar.style.width = `${total ? Math.round(correctCount/total*100) : 0}%`;
+        }
+
+        function checkVerbInput(el) {
+            if (verbLocked) return; // 已全部通过，锁定不再计分
+            const item = el.closest('.verb-item');
+            const correct = item.dataset.correct;
+            const val = el.value.trim();
+            const feedback = item.querySelector('.verb-feedback');
+            if (!val) { el.className = 'form-input';
+                feedback.textContent = ''; }
+            else if (norm(val) === norm(correct)) {
+                el.className = 'form-input correct';
+                feedback.textContent = '✅';
+                feedback.style.color = '#1f7a3a';
+            } else {
+                el.className = 'form-input wrong';
+                feedback.textContent = `❌`;
+                feedback.style.color = '#c62828';
+            }
+            const inputs = document.querySelectorAll('.verb-item .form-input');
+            let correctNow = 0;
+            inputs.forEach(inp => { if (inp.classList.contains('correct')) correctNow++; });
+            updateVerbProgress(correctNow);
+        }
+
+        // 检查所有：只有全部正确才会通过并加分；通过后锁定，防止反复点击重复加分
+        function checkAllVerbForms() {
+            if (verbLocked) return;
+            const inputs = document.querySelectorAll('.verb-item .form-input');
+            let total = 0,
+                correct = 0;
+            inputs.forEach(inp => {
+                const item = inp.closest('.verb-item');
+                const correctAns = item.dataset.correct;
+                const val = inp.value.trim();
+                total++;
+                if (norm(val) === norm(correctAns)) {
+                    correct++;
+                    inp.className = 'form-input correct';
+                    item.querySelector('.verb-feedback').textContent = '✅ 正确';
+                } else {
+                    inp.className = 'form-input wrong';
+                    item.querySelector('.verb-feedback').textContent = `❌ 正确: ${correctAns}`;
+                }
+            });
+            const res = document.getElementById('verbBatchResult');
+            verbTotalCount = total;
+            verbCorrectCount = correct;
+            updateVerbProgress(correct);
+            const rate = total ? Math.round((correct / total) * 100) : 0;
+            if (total > 0) {
+                if (rate === 100) {
+                    verbLocked = true;
+                    verbScore += 80;
+                    const taskKey = `${activeLesson.id}-verb`;
+                    const firstTime = user && !(user.completed || []).includes(taskKey);
+                    markTask('verb');
+                    if (firstTime && user) { user.xp = (user.xp || 0) + 80; save(); }
+                    res.textContent = `🎉 全部正确！+80 XP！本课已全部完成！`;
+                    res.style.color = '#1f7a3a';
+                    inputs.forEach(inp => { inp.disabled = true; });
+                    const checkBtn = document.getElementById('verbCheckAllBtn');
+                    const resetBtn = document.getElementById('verbResetBtn');
+                    if (checkBtn) checkBtn.style.display = 'none';
+                    if (resetBtn) resetBtn.style.display = 'none';
+                } else {
+                    verbScore = Math.max(0, verbScore - 5);
+                    res.textContent = `${correct}/${total} 正确 (${rate}%) · −5 分，请修改错误项后重新检查`;
+                    res.style.color = '#c62828';
+                }
+            }
+            document.getElementById('verbScore').textContent = verbScore;
+            renderTaskStatus();
+            updateStatus();
+        }
+
+        function resetVerbForms() {
+            if (verbLocked) return; // 已通过的课不允许清空重置，避免误触丢失完成状态
+            const inputs = document.querySelectorAll('.verb-item .form-input');
+            inputs.forEach(inp => {
+                inp.value = '';
+                inp.className = 'form-input';
+                const feedback = inp.closest('.verb-item').querySelector('.verb-feedback');
+                feedback.textContent = '';
+            });
+            const res = document.getElementById('verbBatchResult');
+            if (res) res.textContent = '';
+            updateVerbProgress(0);
+        }
+
+        // ============================================================
+        //  LIBRARY
+        // ============================================================
+        function renderLibrary() {
+            const q = document.getElementById('search').value.trim().toLowerCase();
+            let rows = [];
+            LESSONS.forEach(l => l.words.forEach(w => rows.push({ lesson: l.id, de: w[0], zh: w[1], pic: w[2] })));
+            document.getElementById('wordCount').textContent = rows.length;
+            if (q) rows = rows.filter(r => r.de.toLowerCase().includes(q) || r.zh.includes(q) ||
+                `lektion ${r.lesson}`.includes(q));
+            const box = document.getElementById('libraryBox');
+            box.innerHTML =
+                `<table style="width:100%;border-collapse:collapse;color:#0a2a5e;"><thead style="background:#d0e0f5;color:#0a2a5e;"><th>课</th><th>图</th><th>Deutsch</th><th>中文</th><th>🔊</th></thead><tbody>${rows.slice(0,300).map(r=>`<tr><td>L${r.lesson}</td><td>${r.pic}</td><td><b>${r.de}</b></td><td>${r.zh}</td><td><button onclick="speak('${r.de.replaceAll("'","\\'")}','de-DE')">▶</button></td></tr>`).join('')}</tbody></table>`;
+        }
+
+        // ============================================================
+        //  STATUS
+        // ============================================================
+        function updateStatus() {
+            if (!user) { document.getElementById('topStatus').textContent = '未登录'; return; }
+            const lvl = Math.floor((user.xp || 0) / 100) + 1;
+            const pct = (user.xp || 0) % 100;
+            document.getElementById('topStatus').textContent =
+                `${user.name} · Level ${lvl} · XP ${user.xp} · ${Math.min(user.unlocked||1,50)}/50`;
+            const f = document.getElementById('xpfill'),
+                t = document.getElementById('xpText');
+            if (f) { f.style.width = pct + '%';
+                t.textContent = `XP ${pct} / 100`; }
+        }
+
+        function showLibrary() { renderLibrary();
+            show('library'); }
+
+        // ============================================================
+        //  INIT - 页面加载时自动迁移旧数据
+        // ============================================================
+        function migrateOldData() {
+            ['dqv5_', 'dqv6_'].forEach(prefix => {
+                Object.keys(localStorage).filter(k => k.startsWith(prefix)).forEach(oldKey => {
+                    try {
+                        const data = JSON.parse(localStorage.getItem(oldKey));
+                        if (data && data.name) {
+                            const newKey = keyFor(data.name);
+                            if (!localStorage.getItem(newKey)) localStorage.setItem(newKey, JSON.stringify(data));
+                            localStorage.removeItem(oldKey);
+                        }
+                    } catch (e) { console.warn('数据迁移失败:', e); }
+                });
+            });
+        }
+
+        if ("speechSynthesis" in window) {
+            setTimeout(() => speechSynthesis.getVoices(), 300);
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            migrateOldData();
+            renderSavedAccounts();
+            show('login');
+        });
+
+        // Expose
+        window.login = login;
+        window.selectSavedAccount = selectSavedAccount;
+        window.renderSavedAccounts = renderSavedAccounts;
+        window.logout = logout;
+        window.show = show;
+        window.renderRoles = renderRoles;
+        window.renderHome = renderHome;
+        window.renderLessonGrid = renderLessonGrid;
+        window.openLesson = openLesson;
+        window.renderWords = renderWords;
+        window.renderPhrases = renderPhrases;
+        window.renderDialog = renderDialog;
+        window.startLessonGame = startLessonGame;
+        window.startMixedGame = startMixedGame;
+        window.nextQuestion = nextQuestion;
+        window.startSpelling = startSpelling;
+        window.nextSpell = nextSpell;
+        window.checkSpell = checkSpell;
+        window.renderVerbExercise = renderVerbExercise;
+        window.checkVerbInput = checkVerbInput;
+        window.checkAllVerbForms = checkAllVerbForms;
+        window.resetVerbForms = resetVerbForms;
+        window.renderLibrary = renderLibrary;
+        window.backToLesson = backToLesson;
+        window.speak = speak;
+        window.unlockNext = unlockNext;
+        window.getLessonProgress = getLessonProgress;
+        window.markTask = markTask;
+        window.updateStatus = updateStatus;
+        window.save = save;
+        window.norm = norm;
+        window.showLibrary = showLibrary;
+        window.tryOpenStage = tryOpenStage;
+        window.renderWriteWords = renderWriteWords;
+        window.checkWriteItem = checkWriteItem;
+        window.updateTabLocks = updateTabLocks;
+        window.startMixedGame = startMixedGame;
+    </script>
+
+<script>
+/* Stage code lock (SinoBridge): Lektion 1-12 frei, Code A1 bis Lektion 25, Code A1 + A2 bis Lektion 50 */
+(function(){
+ var SALT='dq-lea-2026',B32='ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+ function fnv(s){var h=0x811c9dc5;for(var i=0;i<s.length;i++){h^=s.charCodeAt(i);h=Math.imul(h,0x01000193)>>>0}return h>>>0}
+ function chk(st,b){var h=fnv(st+b+SALT),o='';for(var i=0;i<4;i++){o+=B32[h&31];h>>>=5}return o}
+ function norm(c){return String(c||'').toUpperCase().replace(/[^A-Z0-9]/g,'')}
+ function stageOf(c){c=norm(c);var m=/^DQ(A1|A2)([A-Z0-9]{4})([A-Z0-9]{4})$/.exec(c);return (m&&chk(m[1],m[2])===m[3])?m[1]:null}
+ function lic(){try{return JSON.parse(localStorage.getItem('dq_license')||'{}')}catch(e){return {}}}
+ function cap(){var L=lic();return (L.A1&&L.A2)?50:(L.A1?25:FIRST_UNLOCKED_LESSON)}
+ function status(){var L=lic(),el=document.getElementById('dqLicStatus');if(!el)return;
+   el.textContent=(L.A1&&L.A2)?'✅ A1 + A2 已解锁（全部 50 课）':(L.A1?'✅ A1 已解锁（第 1–25 课）· A2 需另购兑换码':'第 1–12 课免费 · 输入兑换码解锁 A1 / A2')}
+ maybeAutoUnlock=function(){
+   if(!user)return false;var c=Math.min(LESSONS.length,cap()),changed=false;
+   while(user.unlocked<c&&getLessonProgress(user.unlocked)>=100){user.unlocked++;changed=true}
+   if(user.unlocked>c){user.unlocked=c;changed=true}
+   if(changed){user.lastLesson=Math.min(Math.max(user.lastLesson||1,1),user.unlocked);save()}
+   return changed};
+ var _home=renderHome;
+ renderHome=function(){maybeAutoUnlock();_home.apply(this,arguments);status()};
+ unlockNext=function(){
+   if(!user)return;var changed=maybeAutoUnlock();renderHome();show('lessons');
+   if(!changed){
+     if(user.unlocked>=cap()&&getLessonProgress(user.unlocked)>=100&&user.unlocked<LESSONS.length){alert('🔑 恭喜完成！继续学习需要兑换码，请在首页输入。Weiter geht es mit einem Freischaltcode auf der Startseite.')}
+     else alert('⏳ 请先完成当前课程的全部任务，系统会自动解锁下一课。')}};
+ window.dqRedeem=function(){
+   var inp=document.getElementById('dqCode'),st=stageOf(inp.value);
+   if(!st){alert('❌ 兑换码不正确，请检查格式 DQA1-XXXX-XXXX。Der Code stimmt nicht.');return}
+   var L=lic();L[st]=norm(inp.value);try{localStorage.setItem('dq_license',JSON.stringify(L))}catch(e){}
+   inp.value='';
+   if(st==='A2'&&!L.A1)alert('✅ A2 兑换码已保存。A2 在解锁 A1 之后生效。');else alert('🎉 '+st+' 已解锁！');
+   if(user){maybeAutoUnlock();renderHome()}status()};
+ status();
+})();
+</script>
+</body>
+</html>

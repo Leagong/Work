@@ -1,0 +1,318 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>SinoBridge AI Consulting · SAP 流程可视化与手册</title><meta name="claude:viewport-fit-sides" content="cover"><meta name="description" content="把 SAP 流程可视化，并与企业自己的操作手册关联：员工自己就能找到流程、事务代码和操作说明。斯图加特地区的咨询服务。"><link rel="canonical" href="https://sinobridge-ai.com/zh/"><meta property="og:title" content="SinoBridge AI Consulting · SAP 流程可视化与手册"><meta property="og:description" content="把 SAP 流程可视化，并与企业自己的操作手册关联：员工自己就能找到流程、事务代码和操作说明。斯图加特地区的咨询服务。"><link rel="alternate" hreflang="de" href="https://sinobridge-ai.com/"><link rel="alternate" hreflang="zh-CN" href="https://sinobridge-ai.com/zh/"><link rel="alternate" hreflang="en" href="https://sinobridge-ai.com/en/"><link rel="alternate" hreflang="x-default" href="https://sinobridge-ai.com/"><style>
+/* Layout: navy hero with a live process strip, paper bands for reading, one gold line as signature. */
+:root{
+  --ink:#0F172A; --night:#0B1220; --panel:#131D31; --rule-d:#26344F;
+  --paper:#F6F7F9; --card:#FFFFFF; --text:#0F172A; --muted:#475569; --rule:#DFE3EA;
+  --on-dark:#E8ECF3; --on-dark-2:#A6B1C4;
+  --gold:#C89B3C; --gold-ink:#7E5F17; --gold-soft:#FBF6EA;
+  --display:"Avenir Next","Segoe UI Variable Display","Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans SC",system-ui,sans-serif;
+  --body:-apple-system,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans SC",Roboto,Arial,sans-serif;
+  --mono:"SF Mono","JetBrains Mono",Consolas,"Roboto Mono",monospace;
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--paper);color:var(--text);font:16px/1.65 var(--body)}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
+.wrap{max-width:1180px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.eyebrow{font:600 12px/1 var(--mono);letter-spacing:.18em;text-transform:uppercase;color:var(--gold-ink);margin:0}
+.dark .eyebrow,.hero .eyebrow{color:var(--gold)}
+h1,h2,h3{font-family:var(--display);text-wrap:balance;margin:0}
+h2{font-size:clamp(28px,4vw,40px);font-weight:800;letter-spacing:-.01em;line-height:1.2}
+.lead{color:var(--muted);font-size:17px;max-width:62ch;margin:0}
+section{padding-block:clamp(56px,8vw,96px)}
+.sec-head{display:flex;flex-direction:column;gap:10px;margin-bottom:36px}
+.white{background:var(--card)}
+
+header.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:rgba(15,23,42,.95);backdrop-filter:blur(8px);border-bottom:1px solid var(--rule-d);color:var(--on-dark)}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:21;background:var(--ink)}
+.navrow{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px 24px;padding-block:14px}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none;font:700 18px/1 var(--display);color:var(--on-dark)}
+.brand b{color:var(--gold);font-weight:700}
+.nav{display:flex;flex-wrap:wrap;align-items:center;gap:6px 18px;font-size:14px}
+.nav a{text-decoration:none;color:var(--on-dark-2);padding-block:6px}
+.nav a:hover,.nav a[aria-current]{color:#fff}
+.nav a[aria-current]{box-shadow:inset 0 -2px 0 var(--gold)}
+.nav .cta{color:var(--ink);background:var(--gold);padding:8px 16px;border-radius:4px;font-weight:700}
+.langs{display:flex;gap:2px;font:600 12px/1 var(--mono)}
+.langs a{padding:7px 8px;border:1px solid transparent;border-radius:3px;text-decoration:none;color:var(--on-dark-2)}
+.langs a[aria-current]{border-color:var(--rule-d);color:#fff}
+
+.hero{position:relative;overflow:hidden;color:var(--on-dark);padding-block:clamp(56px,9vw,104px) clamp(48px,6vw,72px);
+  background-color:var(--ink);
+  background-image:linear-gradient(var(--rule-d) 1px,transparent 1px),linear-gradient(90deg,var(--rule-d) 1px,transparent 1px);
+  background-size:56px 56px}
+.hero::after{content:"";position:absolute;inset:0;background:radial-gradient(ellipse at 70% 35%,transparent 0,var(--ink) 72%);pointer-events:none}
+.hero .wrap{position:relative;z-index:1}
+.hero h1{font-size:clamp(34px,6vw,66px);font-weight:800;line-height:1.1;letter-spacing:-.02em;color:#fff;margin-top:18px}
+.hero .sub{color:var(--on-dark-2);font-size:clamp(16px,2vw,19px);max-width:60ch;margin:22px 0 0}
+.btns{display:flex;flex-wrap:wrap;gap:12px;margin-top:30px}
+.btn{display:inline-flex;align-items:center;gap:8px;min-height:46px;padding:0 22px;border-radius:4px;font-weight:700;text-decoration:none;font-size:15px;border:1.5px solid transparent;transition:filter .15s,box-shadow .15s,border-color .15s}
+.btn.gold{background:var(--gold);color:var(--ink)}
+.btn.gold:hover{filter:brightness(1.08);box-shadow:0 0 0 6px rgba(200,155,60,.18)}
+.btn.line{border-color:#3A4A6B;color:#fff}
+.btn.line:hover{border-color:var(--gold)}
+.btn.dark-solid{background:var(--ink);color:#fff}
+.note{margin-top:26px;font:500 12px/1.6 var(--mono);color:var(--on-dark-2);letter-spacing:.04em}
+
+/* process strip in hero */
+.strip{margin-top:44px;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:0;border-top:1px solid var(--rule-d);padding-top:18px}
+.strip span{position:relative;font:600 12px/1.3 var(--mono);color:var(--on-dark-2);padding-right:8px}
+.strip span b{display:block;font:700 15px/1.2 var(--mono);color:#fff;margin-bottom:4px}
+.strip span::before{content:"";position:absolute;top:-23px;left:0;width:9px;height:9px;border-radius:50%;background:var(--panel);border:2px solid var(--gold)}
+.strip span.on::before{background:var(--gold);box-shadow:0 0 0 5px rgba(200,155,60,.22)}
+@media (max-width:640px){.strip{grid-template-columns:repeat(3,minmax(0,1fr));row-gap:28px}}
+
+/* demo */
+.demo{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.25fr);gap:28px;align-items:start}
+@media (max-width:860px){.demo{grid-template-columns:minmax(0,1fr)}}
+.steps-o2c{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:8px;counter-reset:o}
+.steps-o2c li{counter-increment:o}
+.stepbtn{width:100%;min-height:56px;display:grid;grid-template-columns:36px minmax(0,1fr) auto;align-items:center;gap:12px;text-align:left;
+  background:var(--card);border:1px solid var(--rule);border-radius:6px;padding:10px 14px;font:inherit;color:var(--text);cursor:pointer;transition:border-color .2s,box-shadow .2s,transform .2s}
+.stepbtn::before{content:counter(o);display:grid;place-items:center;width:30px;height:30px;border-radius:50%;border:1.5px solid var(--rule);font:700 13px/1 var(--mono);color:var(--muted)}
+.stepbtn .t{font-weight:600}
+.stepbtn code{font:600 13px/1 var(--mono);color:var(--muted)}
+.stepbtn:hover{border-color:var(--gold)}
+.stepbtn[aria-pressed="true"]{border-color:var(--gold);box-shadow:0 8px 24px -14px rgba(126,95,23,.45);transform:translateX(4px)}
+.stepbtn[aria-pressed="true"]::before{background:var(--gold);border-color:var(--gold);color:var(--ink)}
+.panel{background:var(--ink);color:var(--on-dark);border-radius:8px;padding:clamp(22px,3vw,32px);min-height:100%}
+.panel h3{font-size:24px;color:#fff;font-weight:800;margin-top:6px}
+.panel dl{margin:22px 0 0;display:grid;grid-template-columns:minmax(0,1fr);gap:16px}
+.panel dt{font:600 11px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--gold);margin-bottom:6px}
+.panel dd{margin:0;color:var(--on-dark)}
+.panel .tx{font:700 22px/1 var(--mono);color:#fff}
+.panel .q{border-left:2px solid var(--gold);padding-left:12px;color:var(--on-dark)}
+.panel .k{font:600 12px/1 var(--mono);color:var(--on-dark-2)}
+.panel{animation:fade .35s ease-out}
+@keyframes fade{from{opacity:.4;transform:translateY(4px)}to{opacity:1;transform:none}}
+.demo-note{margin:16px 0 0;font-size:13px;color:var(--muted)}
+
+/* pains */
+.pains{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px}
+@media (max-width:900px){.pains{grid-template-columns:minmax(0,1fr)}}
+.pain{border-top:2px solid var(--ink);padding-top:18px}
+.pain h3{font-size:19px;font-weight:700;margin-bottom:8px}
+.pain p{margin:0;color:var(--muted)}
+
+/* blocks */
+.cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px}
+.cards4{grid-template-columns:repeat(2,minmax(0,1fr))}
+.fmt{grid-template-columns:repeat(4,minmax(0,1fr))}
+@media (max-width:960px){.fmt{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:520px){.fmt{grid-template-columns:minmax(0,1fr)}}
+@media (max-width:960px){.cards{grid-template-columns:minmax(0,1fr)}}
+.card{background:var(--card);border:1px solid var(--rule);border-radius:6px;padding:28px;display:flex;flex-direction:column;gap:12px;transition:transform .2s,border-color .2s,box-shadow .2s}
+.card:hover{transform:translateY(-3px);border-color:var(--gold);box-shadow:0 10px 30px -12px rgba(126,95,23,.35)}
+.card h3{font-size:21px;font-weight:800}
+.card ul{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:10px;font-size:15px}
+.card li{padding-left:18px;position:relative}
+.card li::before{content:"";position:absolute;left:0;top:.72em;width:8px;height:1.5px;background:var(--gold)}
+
+/* who */
+.who{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:1px;background:var(--rule);border:1px solid var(--rule);border-radius:6px;overflow:hidden}
+@media (max-width:900px){.who{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:520px){.who{grid-template-columns:minmax(0,1fr)}}
+.who div{background:var(--card);padding:22px}
+.who h3{font-size:17px;font-weight:700;margin-bottom:6px}
+.who p{margin:0;font-size:14px;color:var(--muted)}
+
+/* flow */
+.flow{list-style:none;margin:0;padding:0;counter-reset:s;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:20px}
+@media (max-width:900px){.flow{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:520px){.flow{grid-template-columns:minmax(0,1fr)}}
+.flow li{counter-increment:s;border-top:1px solid var(--rule);padding-top:16px}
+.flow li::before{content:counter(s,decimal-leading-zero);display:block;font:700 22px/1 var(--mono);color:var(--gold-ink);margin-bottom:12px}
+.flow h3{font-size:18px;font-weight:700;margin-bottom:6px}
+.flow p{margin:0;color:var(--muted);font-size:15px}
+.pricenote{margin-top:28px;padding:14px 16px;background:var(--gold-soft);border:1px solid #E9D9B2;border-radius:4px;color:#4A3A12;font-size:15px;max-width:72ch}
+
+/* about */
+.about{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:48px}
+@media (max-width:860px){.about{grid-template-columns:minmax(0,1fr)}}
+.about p{margin:0 0 14px}
+.creds{display:flex;flex-direction:column;border-top:1px solid var(--rule)}
+.cred{display:flex;justify-content:space-between;flex-wrap:wrap;gap:4px 16px;padding:16px 0;border-bottom:1px solid var(--rule)}
+.cred strong{font-family:var(--display)}
+.cred span{color:var(--muted);font-size:14px}
+.creds.rows .cred{display:grid;grid-template-columns:minmax(120px,170px) minmax(0,1fr);gap:4px 20px}
+.creds.rows .cred span{font-size:15px;color:var(--text)}
+@media (max-width:520px){.creds.rows .cred{grid-template-columns:minmax(0,1fr)}}
+
+/* contact */
+.contact{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.2fr);gap:48px}
+@media (max-width:860px){.contact{grid-template-columns:minmax(0,1fr)}}
+.contact dl{margin:24px 0 0;display:grid;grid-template-columns:auto minmax(0,1fr);gap:10px 18px;align-items:center}
+.contact dt{font:600 12px/1.9 var(--mono);color:var(--gold-ink);letter-spacing:.1em;text-transform:uppercase}
+.contact dd{margin:0;overflow-wrap:anywhere;display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.copy{min-height:36px;padding:0 12px;border:1px solid var(--rule);background:var(--card);border-radius:4px;font:600 13px/1 var(--body);cursor:pointer;color:var(--text)}
+form{background:var(--card);border:1px solid var(--rule);border-radius:6px;padding:28px;display:flex;flex-direction:column;gap:6px}
+label{font-size:13px;font-weight:600;margin-top:10px}
+input,textarea,select{font:inherit;font-size:15px;padding:12px;border:1px solid #C9D0DB;border-radius:4px;background:#fff;color:var(--text);width:100%}
+textarea{resize:vertical;min-height:110px}
+form button{margin-top:16px;min-height:48px;border:0;border-radius:4px;background:var(--gold);color:var(--ink);font:700 16px/1 var(--body);cursor:pointer}
+.status{min-height:1.5em;font-size:14px;margin:8px 0 0}
+.hp{position:absolute;left:-9999px}
+
+footer{background:var(--night);color:var(--on-dark-2);font-size:14px}
+footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:16px;padding-block:32px}
+footer nav{display:flex;flex-wrap:wrap;gap:18px}
+footer a{color:var(--on-dark-2)}
+footer a:hover{color:#fff}
+.legal{max-width:760px}
+.legal h1{font-size:36px;font-weight:800;margin-bottom:24px}
+.legal h2{font-size:20px;margin:28px 0 8px}
+.legal p{margin:0 0 8px}
+/* subpages */
+.phero{padding-block:clamp(56px,8vw,96px) clamp(40px,6vw,64px);background:var(--ink);color:var(--on-dark)}
+.phero h1{font-size:clamp(32px,5.4vw,58px);font-weight:800;color:#fff;line-height:1.1;margin-top:16px;letter-spacing:-.02em}
+.phero p.lead2{color:var(--on-dark-2);max-width:62ch;margin:18px 0 0;font-size:17px}
+.steps{list-style:none;margin:0;padding:0;counter-reset:st;display:flex;flex-direction:column;border-top:1px solid var(--rule)}
+.steps li{counter-increment:st;display:grid;grid-template-columns:64px minmax(0,1fr);gap:16px;padding:22px 0;border-bottom:1px solid var(--rule)}
+.steps li::before{content:counter(st,decimal-leading-zero);font:700 22px/1.2 var(--mono);color:var(--gold-ink)}
+.steps h3,.items h3{font-size:19px;font-weight:700;margin-bottom:6px}
+.steps p,.items p{margin:0;color:var(--muted);max-width:72ch}
+.items{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px}
+@media (max-width:800px){.items{grid-template-columns:minmax(0,1fr)}}
+.items > div{background:var(--card);border:1px solid var(--rule);border-radius:6px;padding:24px}
+.items > div.wide{grid-column:1/-1}
+.pk{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px}
+@media (max-width:760px){.pk{grid-template-columns:minmax(0,1fr)}}
+.pk > div{background:var(--card);border:1px solid var(--rule);border-radius:6px;padding:26px;display:flex;flex-direction:column;gap:8px}
+.pk h3{font-size:19px;font-weight:700}
+.pk p{margin:0;color:var(--muted);font-size:15px;flex:1}
+.price{font:600 14px/1.4 var(--mono);color:var(--text)}
+.dalian{display:grid;grid-template-columns:auto minmax(0,1fr);gap:16px 24px;align-items:start;background:var(--ink);color:var(--on-dark);border-radius:8px;padding:clamp(22px,3vw,32px)}
+.dalian h3{color:#fff;font-size:20px}
+.dalian p{margin:0;color:var(--on-dark-2)}
+@media (max-width:640px){.dalian{grid-template-columns:minmax(0,1fr)}}
+.src{font-size:13px;color:var(--muted);margin-top:24px}
+.src ol{padding-left:20px;margin:10px 0 0;display:flex;flex-direction:column;gap:4px}
+.src a{overflow-wrap:anywhere}
+.disc{font-size:14px;color:var(--muted);max-width:72ch;margin-top:36px}
+.courses{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:20px}
+@media (max-width:1000px){.courses{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:560px){.courses{grid-template-columns:minmax(0,1fr)}}
+.course{background:var(--card);border:1px solid var(--rule);border-radius:6px;padding:24px;display:flex;flex-direction:column;gap:12px}
+.course h3{font-size:19px;font-weight:700}
+.course ul{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:8px;font-size:14px;flex:1}
+.course li{padding-left:16px;position:relative}
+.course li::before{content:"";position:absolute;left:0;top:.72em;width:7px;height:1.5px;background:var(--gold)}
+.course .price{border-top:1px solid var(--rule);padding-top:12px}
+.tag{align-self:flex-start;font:600 11px/1 var(--mono);letter-spacing:.1em;text-transform:uppercase;padding:5px 7px;border-radius:2px;border:1px solid var(--rule);color:var(--muted)}
+.games{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px}
+@media (max-width:760px){.games{grid-template-columns:minmax(0,1fr)}}
+.game{background:var(--ink);color:var(--on-dark);border-radius:8px;padding:clamp(22px,3vw,32px);display:flex;flex-direction:column;gap:12px}
+.game h3{color:#fff;font-size:26px;font-weight:800}
+.game p{margin:0;color:var(--on-dark-2)}
+.unlock{font:600 13px/1.5 var(--mono);color:var(--gold)}
+.small{font-size:13px;color:var(--muted);margin-top:14px}
+form.quiz{gap:4px}
+form.quiz fieldset{border:0;border-bottom:1px solid var(--rule);margin:0;padding:12px 0 16px;min-width:0}
+form.quiz legend{font-weight:700;font-size:15px;padding:0;margin-bottom:10px;display:flex;gap:8px;align-items:center}
+form.quiz legend b{display:inline-grid;place-items:center;width:24px;height:24px;border-radius:50%;background:var(--ink);color:#fff;font:700 12px/1 var(--mono)}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{position:relative;margin:0;font-weight:500;font-size:14px;cursor:pointer}
+.chip input{position:absolute;opacity:0;width:1px;height:1px}
+.chip span{display:inline-flex;align-items:center;min-height:40px;padding:0 14px;border:1px solid #C9D0DB;border-radius:999px;background:#fff;transition:background .15s,border-color .15s}
+.chip input:checked + span{background:var(--ink);border-color:var(--ink);color:#fff}
+.chip input:focus-visible + span{outline:2px solid var(--gold);outline-offset:2px}
+.lvl{display:grid;grid-template-columns:minmax(90px,auto) minmax(0,1fr);gap:8px 12px;align-items:center}
+@media (max-width:520px){.lvl{grid-template-columns:minmax(0,1fr)}}
+.lvl label{margin:0}
+.two{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-top:8px}
+@media (max-width:520px){.two{grid-template-columns:minmax(0,1fr)}}
+.shots{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin:6px 0}
+.shots figure{margin:0}
+.shots img{display:block;width:100%;height:auto;border-radius:10px;border:1px solid var(--rule-d)}
+.shots figcaption{font-size:12px;color:var(--on-dark-2);margin-top:6px;line-height:1.4}
+.trybox{margin-top:12px;padding:14px;border-radius:6px;background:var(--gold-soft);border:1px solid #E9D9B2;display:flex;flex-direction:column;gap:2px;font-size:14px;color:#4A3A12}
+.btn.line-dark{border-color:var(--ink);color:var(--ink);min-height:40px;padding:0 14px;font-size:14px}
+.perk{font-size:13px;color:var(--on-dark);margin:0}
+.lbl-plain{font-size:13px;font-weight:600;margin:10px 0 6px}
+form.quiz .hint{font-size:14px;color:var(--muted);margin:0 0 8px}
+.progress{position:relative;height:6px;background:var(--rule);border-radius:3px;margin:0 0 26px}
+.progress span{position:absolute;inset:0 auto 0 0;background:var(--gold);border-radius:3px;transition:width .25s}
+.progress em{position:absolute;right:0;top:10px;font:600 12px/1 var(--mono);font-style:normal;color:var(--muted)}
+form.wizard fieldset{border-bottom:0;min-height:180px}
+.stepnav{display:flex;gap:10px;margin-top:16px}
+.stepnav button{margin-top:0;flex:1;min-height:48px;border-radius:4px;font:700 16px/1 var(--body);cursor:pointer}
+.stepnav .prev{flex:0 0 auto;padding:0 18px;background:var(--card);border:1px solid #C9D0DB;color:var(--text)}
+.stepnav .next,.stepnav .send{border:0;background:var(--gold);color:var(--ink)}
+form:not(.wizard) .stepnav .prev,form:not(.wizard) .stepnav .next{display:none}
+.pk4{grid-template-columns:repeat(4,minmax(0,1fr))}
+@media (max-width:1000px){.pk4{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:560px){.pk4{grid-template-columns:minmax(0,1fr)}}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+</style></head><body><header class="top"><div class="wrap navrow"><a class="brand" href="../zh/index.html"><svg width="34" height="22" viewBox="0 0 34 22" aria-hidden="true"><path d="M1 20 Q17 -6 33 20" fill="none" stroke="#C89B3C" stroke-width="2.5"/><path d="M1 20H33" stroke="#E8ECF3" stroke-width="2"/><path d="M9 20V12M17 20V7M25 20V12" stroke="#E8ECF3" stroke-width="1.4"/></svg><span>SinoBridge <b>AI</b> Consulting</span></a><nav class="nav" aria-label="Main"><a href="../zh/index.html" aria-current="page">SAP 流程</a><a href="../zh/markteintritt.html">中德出海</a><a href="../zh/kurse.html">语言培训</a><a class="cta" href="#kontakt">联系</a><span class="langs"><a href="../index.html" lang="de">DE</a><a href="../zh/index.html" lang="zh-CN" aria-current="page">中文</a><a href="../en/index.html" lang="en">EN</a></span></nav></div></header><main id="main"><section class="hero"><div class="wrap">
+<p class="eyebrow">SAP · 流程 · 手册</p><h1>让 SAP 流程看得见，<br>员工自己找得到。</h1><p class="sub">我把企业的 SAP 流程画出来，并把每一步和企业自己的操作手册关联起来。员工在浏览器里就能看到谁在哪个事务代码里做什么，不用再到处问人。</p>
+<div class="btns"><a class="btn gold" href="#kontakt">预约免费流程诊断</a><a class="btn line" href="#beispiel">查看示例 ↓</a></div>
+<p class="note">SAP ECC 与 S/4HANA · SD、MM、CS · 中文、德语、英语</p>
+<div class="strip" aria-hidden="true"><span class="on"><b>VA01</b>创建销售订单</span><span class=""><b>VL01N</b>创建交货单</span><span class=""><b>VL02N</b>过账发货</span><span class=""><b>VF01</b>开具发票</span><span class=""><b>F-28</b>登记收款</span></div></div></section><section id="beispiel" class="white"><div class="wrap"><div class="sec-head"><p class="eyebrow">示例</p><h2>流程门户里的 Order-to-Cash（订单到收款）</h2><p class="lead">点击任意一步，看看员工在门户里会看到什么。</p></div>
+<div class="demo"><ol class="steps-o2c"><li><button type="button" class="stepbtn" aria-pressed="true" aria-controls="p0"><span class="t">创建销售订单</span><code>VA01</code></button></li><li><button type="button" class="stepbtn" aria-pressed="false" aria-controls="p1"><span class="t">创建交货单</span><code>VL01N</code></button></li><li><button type="button" class="stepbtn" aria-pressed="false" aria-controls="p2"><span class="t">过账发货</span><code>VL02N</code></button></li><li><button type="button" class="stepbtn" aria-pressed="false" aria-controls="p3"><span class="t">开具发票</span><code>VF01</code></button></li><li><button type="button" class="stepbtn" aria-pressed="false" aria-controls="p4"><span class="t">登记收款</span><code>F-28</code></button></li></ol><div><div class="panel" id="p0" aria-live="polite"><span class="k">Order-to-Cash · 1/5</span><h3>创建销售订单</h3><dl><div><dt>角色</dt><dd>销售内勤</dd></div><div><dt>SAP 事务代码</dt><dd class="tx">VA01</dd></div><div><dt>手册章节</dt><dd>2.1 · 录入订单，检查价格和交货日期</dd></div><div><dt>这里能解答的典型问题</dt><dd class="q">样品发货应该用哪种订单类型？</dd></div></dl></div><div class="panel" id="p1" aria-live="polite" hidden><span class="k">Order-to-Cash · 2/5</span><h3>创建交货单</h3><dl><div><dt>角色</dt><dd>发运</dd></div><div><dt>SAP 事务代码</dt><dd class="tx">VL01N</dd></div><div><dt>手册章节</dt><dd>3.1 · 创建交货单并发起拣配</dd></div><div><dt>这里能解答的典型问题</dt><dd class="q">为什么这个行项目不能交货？</dd></div></dl></div><div class="panel" id="p2" aria-live="polite" hidden><span class="k">Order-to-Cash · 3/5</span><h3>过账发货</h3><dl><div><dt>角色</dt><dd>仓库</dd></div><div><dt>SAP 事务代码</dt><dd class="tx">VL02N</dd></div><div><dt>手册章节</dt><dd>3.4 · 过账发货，打印送货单</dd></div><div><dt>这里能解答的典型问题</dt><dd class="q">部分交货应该怎么操作？</dd></div></dl></div><div class="panel" id="p3" aria-live="polite" hidden><span class="k">Order-to-Cash · 4/5</span><h3>开具发票</h3><dl><div><dt>角色</dt><dd>开票</dd></div><div><dt>SAP 事务代码</dt><dd class="tx">VF01</dd></div><div><dt>手册章节</dt><dd>4.2 · 开具发票和贷项凭证</dd></div><div><dt>这里能解答的典型问题</dt><dd class="q">为什么订单还停在待开票清单里？</dd></div></dl></div><div class="panel" id="p4" aria-live="polite" hidden><span class="k">Order-to-Cash · 5/5</span><h3>登记收款</h3><dl><div><dt>角色</dt><dd>应收账款</dd></div><div><dt>SAP 事务代码</dt><dd class="tx">F-28</dd></div><div><dt>手册章节</dt><dd>5.1 · 登记客户付款与催款</dd></div><div><dt>这里能解答的典型问题</dt><dd class="q">部分付款怎么过账？</dd></div></dl></div></div></div><p class="demo-note">示例展示。步骤、事务代码和手册章节会按贵公司的系统和手册定制。</p></div></section><section><div class="wrap"><div class="sec-head"><p class="eyebrow">现状</p><h2>这些情况熟悉吗？</h2></div><div class="pains"><div class="pain"><h3>关键用户一走，流程就断</h3><p>关键用户生病、休假或离职，突然就没人知道贷项凭证或退货订单怎么做。订单积压，客户在等。</p></div><div class="pain"><h3>新员工要好几个月才能上手</h3><p>培训全靠“去问问老同事”。SAP 里的错误要到开票或月结时才暴露，那时候代价已经很高了。</p></div><div class="pain"><h3>手册是五年前的 PDF</h3><p>没人找得到、没人维护，内容早就和系统对不上。每次审计、迁移 S/4HANA 或人员变动，都得从头再来。</p></div></div></div></section><section id="leistung" class="white"><div class="wrap"><div class="sec-head"><p class="eyebrow">服务</p><h2>三个模块：自助代替询问</h2></div><div class="cards"><article class="card"><h3>梳理并可视化流程</h3><ul><li>与业务部门和关键用户开工作坊</li><li>端到端流程，如订单到收款、采购到付款、售后服务</li><li>每一步标注角色、SAP 事务代码和 Fiori 应用</li><li>不绑定工具，可用 viflow、Signavio 或 Visio 等</li></ul></article><article class="card"><h3>关联操作手册</h3><ul><li>每个流程步骤直接链接到对应的操作说明</li><li>带系统截图的点击式操作指南</li><li>公司内部规定、表单和联系人</li><li>审核并沿用已有文档</li></ul></article><article class="card"><h3>流程门户与交接</h3><ul><li>在浏览器中发布，可按角色和任务搜索</li><li>关键用户培训</li><li>维护方案，让团队自己更新</li><li>可选：基于流程和手册的 AI 搜索</li></ul></article></div></div></section><section><div class="wrap"><div class="sec-head"><p class="eyebrow">服务对象</p><h2>适合谁</h2></div><div class="who"><div><h3>使用 SAP 的中型企业</h3><p>只有少数关键用户懂流程，其他人只能到处问。</p></div><div><h3>准备迁移 S/4HANA</h3><p>不清楚现有流程，迁移时只会把混乱一起搬过去。</p></div><div><h3>业务增长、人员流动大</h3><p>新员工要尽快上手，又不能拖慢整个团队。</p></div><div><h3>在中国有工厂或分公司</h3><p>中国工厂和德国总部执行的流程不一样，却没人发现。</p></div></div></div></section><section id="ablauf" class="white"><div class="wrap"><div class="sec-head"><p class="eyebrow">合作流程</p><h2>四步建成流程门户</h2></div><ol class="flow"><li><h3>免费流程诊断</h3><p>30 分钟线上沟通：哪些流程问题最多，现在已有哪些文档？</p></li><li><h3>试点一个流程</h3><p>选一个端到端流程，例如订单到收款，完成可视化并关联手册。</p></li><li><h3>全面推广</h3><p>按优先级覆盖更多流程，发布到流程门户。</p></li><li><h3>交接</h3><p>培训关键用户，交付维护方案，之后团队可以自主维护。</p></li></ol></div></section><section id="preise"><div class="wrap"><div class="sec-head"><p class="eyebrow">合作方式</p><h2>咨询服务与价格</h2><p class="lead">除了流程可视化，我也提供 SAP 流程咨询、流程优化和 IT 项目管理。可以按固定价格打包，也可以按工作量计费，或按月长期合作。</p></div><div class="pk pk4"><div><h3>流程诊断</h3><p>30 分钟线上沟通：问题出在哪里，先做哪一步最值得。</p><span class="price">免费</span></div><div><h3>试点固定价套餐</h3><p>一个端到端流程，例如订单到收款：工作坊、流程图、带截图的关联手册、门户和关键用户培训，3–4 周完成。</p><span class="price">固定价，诊断后报价</span></div><div><h3>按工作量咨询</h3><p>SAP 流程咨询（SD、MM、CS）、流程优化、IT 项目管理和 PMO，按实际工时计费，远程或现场。</p><span class="price">按工时计费，面议</span></div><div><h3>按月长期合作</h3><p>固定对接人，每月预留工作日，负责流程工作、关键用户问题和项目推进。项目结束后也可选小套餐做日常维护。最短 3 个月。</p><span class="price">按月固定费用，面议</span></div></div><p class="small">免费流程诊断后，我们会给您具体报价。现场服务的差旅费按实际发生计算。</p><div class="btns"><a class="btn dark-solid" href="#kontakt">预约免费流程诊断 →</a></div></div></section><section id="ueber-mich"><div class="wrap about"><div><p class="eyebrow">关于我</p><h2 style="margin:10px 0 20px">Lea Gong</h2><p>我是常驻斯图加特附近 Leonberg 的 SAP 顾问和 IT 项目经理，曾在大众、安捷伦、GEZE 和 Stuttgart Netze 等企业参与 SD、MM、CS 模块的流程工作。</p><p style="color:var(--muted)">我从 2014 年起教授德语，所以写操作说明时，会让没有 SAP 基础的人也能看懂。</p></div><div class="creds"><div class="cred"><strong>10 年以上项目经验</strong><span>德国和中国，其中多年 SAP 项目</span></div><div class="cred"><strong>GPM · PRINCE2 · PSM I</strong><span>项目管理认证</span></div><div class="cred"><strong>TÜV Rheinland</strong><span>Applied AI Transformation Manager</span></div><div class="cred"><strong>MSc Business Intelligence &amp; Analytics</strong><span>法国商学院</span></div><div class="cred"><strong>MBA</strong><span>中国</span></div><div class="cred"><strong>德语语言文学学士</strong><span>中国，含德国莱比锡大学交换</span></div><div class="cred"><strong>中文 · 德语 C1 · 英语 C1</strong><span>工作语言</span></div></div></div></section><section id="kontakt" class="white"><div class="wrap contact"><div><p class="eyebrow">联系</p><h2 style="margin:10px 0 14px">预约流程诊断</h2><p class="lead">简单写下您使用的 SAP 系统和最头疼的流程，我会在两个工作日内回复。</p>
+<dl><dt>邮箱</dt><dd><span id="mail-zh">leagong@outlook.com</span><button class="copy" type="button" aria-controls="mail-zh" data-copy="leagong@outlook.com" data-done="已复制">复制</button></dd>
+<dt>LinkedIn</dt><dd><a href="https://www.linkedin.com/in/leagong/" target="_blank" rel="noopener">Lea Gong</a> · <a href="https://www.linkedin.com/company/146326969/" target="_blank" rel="noopener">SinoBridge AI Consulting</a></dd><dt>电话</dt><dd><a href="tel:+491775619819">+49 177 5619819</a></dd><dt>地点</dt><dd>71229 Leonberg</dd></dl></div>
+<form id="contact-form" name="contact" method="POST" data-netlify="true" netlify-honeypot="bot-field" data-ok="已收到，我会在两个工作日内回复。" data-err="暂时无法发送，请直接发邮件给我。">
+<input type="hidden" name="form-name" value="contact"><input type="hidden" name="lang" value="zh"><input type="hidden" name="seite" value="home">
+<p class="hp"><label for="bot-zh">Bot</label><input id="bot-zh" name="bot-field" tabindex="-1" autocomplete="off"></p>
+<label for="f-topic">咨询内容</label><select id="f-topic" name="thema"><option>免费流程诊断</option><option>流程与手册试点套餐</option><option>SAP 或流程咨询</option><option>IT 项目管理或 PMO</option><option>按月长期合作</option><option>其他</option></select>
+<label for="f-name">姓名</label><input id="f-name" name="name" required autocomplete="name">
+<label for="f-company">公司（选填）</label><input id="f-company" name="company" autocomplete="organization">
+<label for="f-mail">邮箱</label><input id="f-mail" name="email" type="email" required autocomplete="email">
+<p class="lbl-plain">SAP 系统（选填）</p><div class="chips"><label class="chip"><input type="radio" name="sap_system" value="SAP ECC"><span>SAP ECC</span></label><label class="chip"><input type="radio" name="sap_system" value="SAP S/4HANA"><span>SAP S/4HANA</span></label><label class="chip"><input type="radio" name="sap_system" value="还不确定"><span>还不确定</span></label></div><label for="f-msg">留言（选填）</label><textarea id="f-msg" name="message"></textarea>
+<button type="submit">发送</button><p class="status" id="form-status" role="status"></p></form></div></section></main><footer><div class="wrap"><span>© 2026 SinoBridge AI Consulting · 德国 Leonberg（斯图加特地区）</span><nav aria-label="Legal"><a href="https://www.linkedin.com/company/146326969/" target="_blank" rel="noopener">LinkedIn</a><a href="../impressum.html">Impressum</a><a href="../datenschutz.html">Datenschutz</a></nav></div></footer>
+<script>
+(function(){
+  var btns=[].slice.call(document.querySelectorAll('.stepbtn'));
+  var panels=[].slice.call(document.querySelectorAll('.panel'));
+  var dots=[].slice.call(document.querySelectorAll('.strip span'));
+  var cur=0, timer=null;
+  function show(i){
+    cur=i;
+    btns.forEach(function(b,j){b.setAttribute('aria-pressed',j===i?'true':'false')});
+    panels.forEach(function(p,j){p.hidden=(j!==i)});
+    dots.forEach(function(d,j){d.classList.toggle('on',j===i)});
+  }
+  btns.forEach(function(b,i){b.addEventListener('click',function(){stop();show(i)})});
+  function stop(){if(timer){clearInterval(timer);timer=null}}
+  var reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if(btns.length&&!reduce){timer=setInterval(function(){show((cur+1)%btns.length)},3500)}
+  document.querySelectorAll('.copy').forEach(function(b){
+    b.addEventListener('click',function(){
+      var t=b.getAttribute('data-copy'),orig=b.textContent;
+      function ok(){b.textContent=b.getAttribute('data-done');setTimeout(function(){b.textContent=orig},1600)}
+      function sel(){var el=document.getElementById(b.getAttribute('aria-controls'));if(!el)return;var r=document.createRange();r.selectNodeContents(el);var s=getSelection();s.removeAllRanges();s.addRange(r)}
+      try{navigator.clipboard.writeText(t).then(ok,sel)}catch(e){sel()}
+    });
+  });
+  document.querySelectorAll('form[data-steps]').forEach(function(f){
+    var steps=[].slice.call(f.querySelectorAll('fieldset')),i=0,of=(f.getAttribute('data-of')||'|').split('|');
+    var bar=document.createElement('div');bar.className='progress';bar.innerHTML='<span></span><em></em>';f.insertBefore(bar,steps[0]);
+    var prev=f.querySelector('.prev'),next=f.querySelector('.next'),send=f.querySelector('.send');
+    f.classList.add('wizard');
+    function go(n){i=n;steps.forEach(function(s,k){s.hidden=(k!==i)});
+      bar.querySelector('span').style.width=((i+1)/steps.length*100)+'%';
+      bar.querySelector('em').textContent=(of[0]==='第'?('第 '+(i+1)+' '+of[1]+' '+steps.length+' 步'):(of[0]+' '+(i+1)+' '+of[1]+' '+steps.length));
+      prev.hidden=(i===0);next.hidden=(i===steps.length-1);send.hidden=(i!==steps.length-1)}
+    function ok(){var bad=null;[].slice.call(steps[i].querySelectorAll('input,select,textarea')).some(function(el){if(!el.checkValidity()){bad=el;return true}});if(bad){bad.reportValidity();return false}return true}
+    next.addEventListener('click',function(){if(ok())go(i+1)});
+    prev.addEventListener('click',function(){go(i-1)});
+    go(0);
+  });
+  var tb=document.getElementById('trybox');
+  if(tb){document.querySelectorAll('input[name=angebot]').forEach(function(r){r.addEventListener('change',function(){tb.hidden=!r.hasAttribute('data-kid')})})}
+  var f=document.getElementById('contact-form');
+  if(f){f.addEventListener('submit',function(e){
+    e.preventDefault();
+    var st=document.getElementById('form-status');
+    var mv=f.querySelector('input[name=motivation]');
+    if(mv){mv.value=[].slice.call(f.querySelectorAll('.motiv:checked')).map(function(c){return c.value}).join(', ')}
+    f.querySelectorAll('input[data-join]').forEach(function(h){h.value=[].slice.call(f.querySelectorAll('.'+h.getAttribute('data-join')+':checked')).map(function(c){return c.value}).join(', ')});
+    fetch('/',{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:new URLSearchParams(new FormData(f)).toString()})
+      .then(function(r){if(!r.ok)throw 0;st.textContent=f.dataset.ok;f.reset()})
+      .catch(function(){st.textContent=f.dataset.err});
+  });}
+})();
+</script>
+</body></html>
