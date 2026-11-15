@@ -1,3 +1,9 @@
+# .de und www leiten auf die Hauptdomain sinobridge-ai.com weiter
+https://sinobridge-ai.de/*       https://sinobridge-ai.com/:splat  301!
+http://sinobridge-ai.de/*        https://sinobridge-ai.com/:splat  301!
+https://www.sinobridge-ai.de/*   https://sinobridge-ai.com/:splat  301!
+http://www.sinobridge-ai.de/*    https://sinobridge-ai.com/:splat  301!
+
 # QR-Code-Kurzlinks (Ziel kann jederzeit geändert werden, QR-Codes bleiben gleich)
 /lea        https://www.linkedin.com/in/leagong/              302
 /linkedin   https://www.linkedin.com/company/146326969/       302
