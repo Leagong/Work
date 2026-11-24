@@ -4,6 +4,14 @@ http://sinobridge-ai.de/*        https://sinobridge-ai.com/:splat  301!
 https://www.sinobridge-ai.de/*   https://sinobridge-ai.com/:splat  301!
 http://www.sinobridge-ai.de/*    https://sinobridge-ai.com/:splat  301!
 
+# Checkliste ist nicht mehr öffentlich
+/checkliste          /prozesse.html        301!
+/checkliste.html     /prozesse.html        301!
+/zh/checkliste       /zh/prozesse.html     301!
+/zh/checkliste.html  /zh/prozesse.html     301!
+/en/checklist        /en/processes.html    301!
+/en/checklist.html   /en/processes.html    301!
+
 # QR-Code-Kurzlinks (Ziel kann jederzeit geändert werden, QR-Codes bleiben gleich)
 /lea        https://www.linkedin.com/in/leagong/              302
 /linkedin   https://www.linkedin.com/company/146326969/       302
