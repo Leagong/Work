@@ -1,0 +1,12 @@
+# www auf die Hauptdomain
+https://www.sinobridge-ai.de/*   https://sinobridge-ai.de/:splat  301!
+http://www.sinobridge-ai.de/*    https://sinobridge-ai.de/:splat  301!
+
+# Alte Pfade der Prozessseite (falls jemand sie direkt auf .de aufruft)
+/prozesse            /                    301
+/prozesse.html       /                    301
+/en/processes        /en/                 301
+/en/processes.html   /en/                 301
+
+# QR-Code-Kurzlinks
+/lea        https://www.linkedin.com/in/leagong/   302

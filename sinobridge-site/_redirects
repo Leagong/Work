@@ -1,16 +1,24 @@
-# .de und www leiten auf die Hauptdomain sinobridge-ai.com weiter
-https://sinobridge-ai.de/*       https://sinobridge-ai.com/:splat  301!
-http://sinobridge-ai.de/*        https://sinobridge-ai.com/:splat  301!
-https://www.sinobridge-ai.de/*   https://sinobridge-ai.com/:splat  301!
-http://www.sinobridge-ai.de/*    https://sinobridge-ai.com/:splat  301!
+# SAP-Prozessberatung ist umgezogen nach sinobridge-ai.de
+/prozesse            https://sinobridge-ai.de/                  301!
+/prozesse.html       https://sinobridge-ai.de/                  301!
+/zh/prozesse         https://sinobridge-ai.de/                  301!
+/zh/prozesse.html    https://sinobridge-ai.de/                  301!
+/en/processes        https://sinobridge-ai.de/en/               301!
+/en/processes.html   https://sinobridge-ai.de/en/               301!
+/checkliste          https://sinobridge-ai.de/   301!
+/checkliste.html     https://sinobridge-ai.de/   301!
+/zh/checkliste       https://sinobridge-ai.de/ 301!
+/zh/checkliste.html  https://sinobridge-ai.de/ 301!
+/en/checklist        https://sinobridge-ai.de/en/ 301!
+/en/checklist.html   https://sinobridge-ai.de/en/ 301!
 
-# Checkliste ist nicht mehr öffentlich
-/checkliste          /prozesse.html        301!
-/checkliste.html     /prozesse.html        301!
-/zh/checkliste       /zh/prozesse.html     301!
-/zh/checkliste.html  /zh/prozesse.html     301!
-/en/checklist        /en/processes.html    301!
-/en/checklist.html   /en/processes.html    301!
+# Kurse heißen jetzt Sprachlösungen
+/kurse               /sprachloesungen.html                      301!
+/kurse.html          /sprachloesungen.html                      301!
+/zh/kurse            /zh/sprachloesungen.html                   301!
+/zh/kurse.html       /zh/sprachloesungen.html                   301!
+/en/courses          /en/language-solutions.html                301!
+/en/courses.html     /en/language-solutions.html                301!
 
 # QR-Code-Kurzlinks (Ziel kann jederzeit geändert werden, QR-Codes bleiben gleich)
 /lea        https://www.linkedin.com/in/leagong/              302
