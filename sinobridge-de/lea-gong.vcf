@@ -1,0 +1,20 @@
+BEGIN:VCARD
+VERSION:3.0
+N;CHARSET=UTF-8:Gong;Lea;;;
+FN;CHARSET=UTF-8:Lea Gong
+NICKNAME;CHARSET=UTF-8:宫主
+ORG;CHARSET=UTF-8:SinoBridge AI Consulting (华桥 AI 咨询)
+TITLE;CHARSET=UTF-8:SAP · Prozessberatung · IT-Projekte
+TEL;TYPE=WORK,CELL,VOICE:+491775619819
+EMAIL;TYPE=WORK,INTERNET:leagong@sinobridge-ai.com
+item1.URL:https://www.sinobridge-ai.de
+item1.X-ABLabel:SAP-Prozessberatung
+item2.URL:https://www.sinobridge-ai.com
+item2.X-ABLabel:China ⇄ Deutschland
+item3.URL:https://www.linkedin.com/company/146326969/
+item3.X-ABLabel:LinkedIn
+X-SOCIALPROFILE;TYPE=linkedin:https://www.linkedin.com/company/146326969/
+X-WECHAT:619570393
+ADR;TYPE=WORK;CHARSET=UTF-8:;;;Region Stuttgart;;;Deutschland
+NOTE;CHARSET=UTF-8:SAP-Prozesswissen sichern. Onboarding beschleunigen.\n中德企业出海服务 · 德语/中文 翻译与培训\nTelefon auch WhatsApp · WeChat/微信: 619570393\nSprachen: Deutsch · English · 中文
+END:VCARD
