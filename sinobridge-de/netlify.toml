@@ -9,3 +9,10 @@
     X-Content-Type-Options = "nosniff"
     Referrer-Policy = "strict-origin-when-cross-origin"
     X-Frame-Options = "SAMEORIGIN"
+
+# Kontakt speichern (vCard): Handys erkennen die Datei direkt als Kontakt
+[[headers]]
+  for = "/lea-gong.vcf"
+  [headers.values]
+    Content-Type = "text/vcard; charset=utf-8"
+    Content-Disposition = "attachment; filename=\"Lea_Gong_SinoBridge.vcf\""
